@@ -8,7 +8,15 @@
   </head>
 
   <body>
-    <p id='calcForm'></P>
-        <p id='resultForm'></P>
+    <p id='calcForm'>
+      <input type='checkbox' name='inputHasDM'>
+      <label for='inputHasDM'>糖尿病罹患あり</label>
+      <br>
+    </p>
+    <p id='resultForm'>
+      <label for='eGFR'>eGFR</label> <input type='number' maxlength='4' name='eGFR'> <label for='eGFR'>ml/min/1.73m2</label>
+      <input type='button' name='buttonGFRtoGrade' value='GFRからGrade計算'> 
+      <p name="paragraphOfGrade"></p>
+    <p>
   </body>
 </html>
