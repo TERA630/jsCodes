@@ -8,19 +8,28 @@
 window.onload = function(){
   let calcForm = document.querySelector('p[id="calcForm"]');
   renderSelect(calcForm);
+
   renderCheckBox(calcForm);
 }
 
-function renderSelect(calcForm){ // selectName, labelForSelect,optionOfSelect
+
+function calcSeverity(){
+   
+}
+
+
+
+
+function renderSelect(parentForm){ // selectName, labelForSelect,optionOfSelect
 
 for(k=0; k< labelForSelect.length; k++){   
  let selectElement = document.createElement('select');
  selectElement.name = selectName[k];
- calcForm.appendChild(selectElement);
+ parentForm.appendChild(selectElement);
  let label = document.createElement('label');
  label.htmlFor = selectElement ; 
  label.textContent = labelForSelect[k];
- calcForm.insertBefore(label,selectElement);
+ parentForm.insertBefore(label,selectElement);
  
  for(l=0;l<optionOfSelect[k].length;l++){
     let optionElement = document.createElement(['option']);
@@ -28,19 +37,19 @@ for(k=0; k< labelForSelect.length; k++){
     optionElement.value = l; 
    selectElement.appendChild(optionElement);
   }
-  calcForm.insertBefore(document.createElement('br'),null);
+  parentForm.insertBefore(document.createElement('br'),null);
  }
 }
 
-function renderCheckBox(calcForm){ // checkBoxName,labelForCheckBox
+function renderCheckBox(parentForm){ // checkBoxName,labelForCheckBox
  for(i=0; i< labelForCheckBox.length; i++){
     let checkBoxElement = document.createElement('input');
     checkBoxElement.name = checkBoxName[i];
     checkBoxElement.type = 'checkbox';
-    calcForm.appendChild(checkBoxElement);
+    parentForm.appendChild(checkBoxElement);
     let label = document.createElement('label');
     label.htmlFor = checkBoxElement;
     label.textContent = labelForCheckBox[i];
-    calcForm.insertBefore(label,null);
+    parentForm.insertBefore(label,null);
 }
 }

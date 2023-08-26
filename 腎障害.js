@@ -6,8 +6,6 @@ const selectName = ["selectSex","selectRBC","selectProteinurea","selectAlbuminur
 const labelForSelect= ["性別","血尿","蛋白尿(g/gCr)","アルブミン尿(mg/gCr)"] ; 
 const optionOfSelect = [ ['男性','女性'],['無','有'],['無し or 0.15未満','0.15～0.49','0.5以上'], ['30未満','30～299','300以上'] ];
 
-const flags = [['green','yellow2','red'],['yellow1','red','red'],['red','red','red']];
-
 const evaluation = [['G1-green-140/90-caBOrThiazideOrRASi-follow','G1-yellow1-130/80-RASifirst-consult_if_blood','G1-orange-130/80-RASifirst-consult'], // CKDG1
 ['G2-green-140/90-caBOrThiazideOrRASi-follow','G2-yellow1-130/80-RASifirst-consult_if_blood','G2-orange-130/80-RASifirst-consult'], // CKDG2
 ['G3a-yellow2-140/90-caBOrThiazideOrRASi-consult_if_young','G3a-orange-130/80-RASifirst-consult','G3a-red-130/80-RASifirst-consult'], // CKDG3a
@@ -66,6 +64,10 @@ calcButton.type = 'button';
 calcButton.value = 'eGFR計算';
 calcButton.onclick = calcGFRAndSeverity;
 calcForm.appendChild(calcButton);
+
+let GFRtoGradeElement  = getObjectOrAlert('buttonGFRtoGrade')
+GFRtoGradeElement.onclick = getGFRAndShowSeverity;
+
 }
 
 
@@ -103,7 +105,10 @@ if(eGFRCreat>90) {
   GFRScore = 2;
 } else {
   GFRScore = 1;};
+  
 
+let age = getIntByName("inputAge");
+let cre = getFloatByName("inputPCr");
 const weight = getIntByName("inputWeight"); 
 const uProtein = greaterOf(getIntBySelect("selectProteinurea") ,getIntBySelect("selectAlbuminuria"));
 let CCRCockcroft = (140-age)*weight /( 72*cre);
