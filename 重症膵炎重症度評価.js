@@ -1,16 +1,15 @@
+const inputName = ["inputWBC","inputPlt","inputCRP","inputBUN","inputLDH","inputPCa","inputBE","inputPAO2"];
+const inputDefalutValue = ['8800','20',"4.5",'18','260','8.8','0','90'];
+const inputLabels = ["WBC-/mm3","血小板数-/万","CRP-mg/dl","BUN-mg/dl","LDH-U/l","Ca-mg/dl","BaseExcess-mEq/L","PaO2-mmHg"];
+const selectorName = ["selectorEffusion","selectorIch"];
+const selectorLabels= ["膵外進展","膵の造影不良域"] ; 
+const checkBoxName = ['isShock','isElder','isIntubated','isRenalDamaged'];
+const checkBoxLabels = ['ショック状態','年齢70歳以上','人工呼吸器装着','乏尿(輸液後1日尿量≦400ml)かCre≧2mg/dl'];
+const optionOfSelectors = [  ['前腎傍腔','結腸間膜根部','腎下極以遠'],  ['膵1/3未満','膵1/3から1/2','膵の1/2以上']] ;
 
 
 window.onload= function(){
     let outMostFrame = document.querySelector('p[id="evaluatonOfSeverity"]');
-    const inputName = ["inputWBC","inputPlt","inputCRP","inputBUN","inputLDH","inputPCa","inputBE","inputPAO2"];
-    const inputDefalutValue = ['8800','20',"4.5",'18','260','8.8','0','90'];
-    const inputLabels = ["WBC-/mm3","血小板数-/万","CRP-mg/dl","BUN-mg/dl","LDH-U/l","Ca-mg/dl","BaseExcess-mEq/L","PaO2-mmHg"];
-    const selectorName = ["selectorEffusion","selectorIch"];
-    const selectorLabels= ["膵外進展","膵の造影不良域"] ; 
-    const checkBoxName = ['isShock','isElder','isIntubated','isRenalDamaged'];
-    const checkBoxLabels = ['ショック状態','年齢70歳以上','人工呼吸器装着','乏尿(輸液後1日尿量≦400ml)かCre≧2mg/dl'];
-    const optionOfSelectors = [  ['前腎傍腔','結腸間膜根部','腎下極以遠'],  ['膵1/3未満','膵1/3から1/2','膵の1/2以上']] ;
-
 
     let checkBoxFrame = document.createElement('div');
     checkBoxFrame.style.display = "row";

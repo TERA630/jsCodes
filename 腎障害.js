@@ -13,6 +13,7 @@ const evaluation = [['G1-green-140/90-caBOrThiazideOrRASi-follow','G1-yellow1-13
 ['G4-red-140/90-caBOrLoopOrRASi-consult','G4-red-130/80-RASifirstwithCaution-consult','G4-red-130/80-RASifirstwithCaution-consult'], // CKD4 
 ['G5-red-140/90-caBOrLoopOrRASi-consult','G5-red-130/80-RASifirstwithCaution-consult','G5-red-130/80-RASifirstwithCaution-consult'], // CKD5
 ]
+//
 
 window.onload= function(){
 const calcForm = document.querySelector('p[id="calcForm"]');

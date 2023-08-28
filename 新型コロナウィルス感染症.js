@@ -8,9 +8,8 @@
 window.onload = function(){
   let calcForm = document.querySelector('p[id="calcForm"]');
   renderSelect(calcForm);
-
   renderCheckBox(calcForm);
-}
+} // 
 
 
 function calcSeverity(){

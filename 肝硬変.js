@@ -4,7 +4,7 @@ window.onload= function(){
     const inputId = ["IdBilirubin","idAlbumin"] ;
     const labelsBefore = ["血清総ビリルビン","血清アルブミン"];
     const defaultValue = ["1.2","3.2"];
-    const labelsAfter =["mg/dl","g/dl"];
+    const labelsAfter =["mg/dl","g/dl"]; //
 
      for(i=0;i < 2; i++){
         let inputElement = document.createElement('input');
