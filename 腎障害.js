@@ -86,7 +86,7 @@ if(isFemale()) {
   eGFRCreat = 194*Math.pow(cre,-1.094)*Math.pow(age,-0.287)
 }
   GFRtoSeverity(eGFRCreat);
-}
+} //
 
 function getGFRAndShowSeverity(){
   GFRtoSeverity(getIntByName('eGFR'));

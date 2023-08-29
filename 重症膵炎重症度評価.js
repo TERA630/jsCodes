@@ -7,7 +7,7 @@ const checkBoxName = ['isShock','isElder','isIntubated','isRenalDamaged'];
 const checkBoxLabels = ['ショック状態','年齢70歳以上','人工呼吸器装着','乏尿(輸液後1日尿量≦400ml)かCre≧2mg/dl'];
 const optionOfSelectors = [  ['前腎傍腔','結腸間膜根部','腎下極以遠'],  ['膵1/3未満','膵1/3から1/2','膵の1/2以上']] ;
 
-
+//
 window.onload= function(){
     let outMostFrame = document.querySelector('p[id="evaluatonOfSeverity"]');
 

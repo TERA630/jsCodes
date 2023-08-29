@@ -11,7 +11,7 @@ window.onload = function(){
   renderCheckBox(calcForm);
 } // 
 
-
+//
 function calcSeverity(){
    
 }

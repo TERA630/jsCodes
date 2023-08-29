@@ -1,4 +1,4 @@
-window.onload= function(){
+ window.onload= function(){
     let inputFormFrame = document.querySelector('p[id="evaluationOfALBI"]');
     const inputName = ["serumBilirubin","serumAlbumin"]; // serum:静置→遠心分離    plasma:抗凝固→遠心分離：血糖､凝固因子,BNP
     const inputId = ["IdBilirubin","idAlbumin"] ;

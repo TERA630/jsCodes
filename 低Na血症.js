@@ -10,7 +10,7 @@ window.onload= function(){
 const calcForm = document.querySelector('p[id="calcForm"]');
 renderInputElements(calcForm);
 renderSelectElements(calcForm);
-
+//
 calcForm.insertBefore(document.createElement('br'),null);
 let calcButton = document.createElement('input');
 calcButton.type = 'button';

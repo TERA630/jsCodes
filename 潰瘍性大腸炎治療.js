@@ -8,7 +8,7 @@ const optionsOfSelect = [
   ["Hgb>10.0g/dl-0","Hgb≦10.0g/dl-2"],
   ["正常-0","","≧30mm/1hr-2"],
   ["正常-0","≧3.0mg/dL-2"]
-] ; //
+] ;  
 
 window.onload= function(){
     let inputFormFrame = document.querySelector('p[id="evaluatonOfSeverity"]');
