@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+  
+
+  </head>
+
+  <body>
+    <div class="doubleColumnParent">
+        <div class="doubleColumn">
+            <label for="selectEGFR">eGFR(ml/min/1.73cm2)</label>
+            <select name="selectEGFR">
+              <option value="0">≧90</option>    
+              <option value="1">60≦　＜90ml/min</option>
+              <option value="2">45≦　＜60ml/min</option>
+              <option value="3">30≦　＜45ml/min</option>
+              <option value="4">15≦　＜30ml/min</option>
+              <option value="5">＜15ml/min r維持透析</option>
+          </select>
+        </div>
+        <div class="doubleColumn">
+          <label for="selectHasDM">糖尿病</label>
+          <select name="selectDM">
+              <option value="0">無し</option>
+              <option value="1">有り</option>
+          </select>
+        </div>
+    </div>
+    <div class="singleColum">
+      <label for="selectProteinUrea">蛋白尿(g/gCr)orアルブミン尿(mg/gCr)</label>
+      <select name="selectProteinUrea">
+        <option value="0">無し or 0.15g/gCr未満</option>
+        <option value="1">0.15≦  ＜0.5g/gcr</option>    
+        <option value="2">0.5g/gCr以上</option>
+        <option value="0">無し or 30mg/gCr未満</option>
+        <option value="1">30≦  ＜200mg/gcr</option>
+        <option value="2">200mg/gCr以上</option>
+      </select>
+    </div>
+
+    <div class="singleColum" name="resultForm">
+    </div>
+  </body>
+</html>
+
+<style>
+ .doubleColumnParent{
+    background-color: antiquewhite;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 1px 1em;
+    margin: 2em auto auto 2em;
+ }
+ .doubleColumn {
+    width: fit-content;
+    margin: 1px 1em;
+    padding : 0;
+ }
+ .singleColum {
+    width: fit-content;
+    padding: 1px;
+    margin: 2em auto auto 4em;
+
+ }
+
+
+</style>

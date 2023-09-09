@@ -10,7 +10,7 @@ window.onload= function(){
 const calcForm = document.querySelector('p[id="calcForm"]');
 renderInputElements(calcForm);
 renderSelectElements(calcForm);
-//
+
 calcForm.insertBefore(document.createElement('br'),null);
 let calcButton = document.createElement('input');
 calcButton.type = 'button';
@@ -74,13 +74,13 @@ function calcSeverity(){
   
   }
 function renderInputElements(parentForm){ // parentForm:親要素
- for(i=0 ;i < inputName.length; i++){
+ for(i=0;i < inputName.length; i++){
     let inputElement = document.createElement('input');
     inputElement.name = inputName[i];
     inputElement.inputMode = "numeric";
     inputElement.size = 4;
     inputElement.defaultValue = inputDefault[i];
-    inputElement.onchange = makeComment;
+inputElement.onchange = makeComment;
     parentForm.appendChild(inputElement);
       
     let label = document.createElement('label');
@@ -115,6 +115,26 @@ function renderSelectElements(parentForm){ // parentForm:親要素
  }
 }
 
+
+
+function calcSeverity(){
+
+let infusionNa = getIntByName("inputInfusionNa");
+let infusionK = getFloatByName("inputInfusionK");
+let plasmaNa = getIntByName("inputPlasmaNa");
+let weight = getIntByName("inputWeight");
+let urineNa = getFloatByName("inputUrineNa");
+let urineK = getFloatByName("inputUrineK");
+
+let elevationNa = (((infusionNa + infusionK) - plasmaNa)/(0.6*weight + 1) );
+ 
+const queryOfResult = document.querySelector('p[id="resultForm"]');
+const queryElevateNa = getObjectOrAlert('inputElevatedNa')
+queryElevateNa.value = elevationNa.toFixed(2);
+
+
+}
+ 
 
 function getObjectOrAlert(name_of_element){ // InputかSelectかオブジェクトがなければAlertする｡
 let queryInput = document.querySelector(` input[name="${name_of_element}"]`)
