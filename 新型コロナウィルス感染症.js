@@ -4,13 +4,23 @@
  const optionOfSelect = [['65歳未満','65歳≦<75歳','75歳以上'],['≧96','93<<96%','<93%'],['3日以内','5日以内','7日以内'],['呼吸器症状なし','咳のみ､呼吸困難なし','呼吸困難､肺炎所見','酸素投与が必要','ICUor人工呼吸器が必要'],['未接種','接種済み']];
  const checkBoxName = ['malignancy','chronicRespiratoryDisease','DM','chronicLiverDiease','CKD','CVD','HT','Obesity','immuneSuppressed'];
  const labelForCheckBox = ['悪性腫瘍','慢性呼吸器疾患(COPD)-2.51','糖尿病-1.74','慢性肝障害','慢性腎不全','心血管･脳血管疾患-1.48','高血圧-1.33','肥満-1.75','免疫抑制'];
+
+ const labelforMedications = [['抗不整脈薬/anti-arrhythmic',['アミオダロン','ペプリジル（ペプリコール)','フレカイニド(タンボコール)','プロバフェノン(プロノン)','キニジン']],
+                    ['鎮痛剤/painKiller',['アンピロキシカム(フルカム)','ピロキシカム(パキソ、フェルデン)']],
+                    ['片頭痛治療薬/migraineMedication',['エレトリプタン(レルパックス)','ジヒドロエルゴタミン']],
+                    ['降圧薬/antiHypertensive',['レザルタス配合錠','アゼルニジピン(カルブロック)']]
+                  ];
+
 // 男性2.09 入院でCKD,CVD,DL,COPD,HTN,DM,CVD,LC,Malignancyのいずれからあれば15%死亡
 
 window.onload = function(){
   let calcForm = document.querySelector('p[id="calcForm"]');
   renderSelect(calcForm);
   renderCheckBox(calcForm);
-  renderCheckBoxGroup(calcForm,'抗不整脈薬/anti-arrhythmic',['アミオダロン','ペプリジル','フレカイニド ','プロバフェノン ','キニジン']);
+  for(i=0; i< labelForMedications.length; i++){ 
+    renderCheckBoxGroup(calcForm,labelforMedications[i][0],labelforMedications[i][1]);
+  }
+
 } 
 
 function calcSeverity(){
