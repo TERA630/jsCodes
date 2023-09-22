@@ -45,10 +45,10 @@ function calcSeverity(){
 
    if(GradeOfSaturation ==0 && GradeOfSymptom <= 1){
      SeverityOfCOVID = '軽症';
-     alert(isChecked('immuneSurpressed'));
+     alert('治療薬の優先度は'+calcPriority()+'です');
    } else if ( GradeOfSaturation == 1 || GradeOfSymptom<=2 ){
      SeverityOfCOVID = '中等症Ⅰ';
-     alert(isChecked('immuneSurpressed'));
+     alert('治療薬の優先度は'+calcPriority()+'です');
    } else if (GradeOfSaturation == 2  || GradeOfSymptom<= 3){
      SeverityOfCOVID = '中等症Ⅱ'
    } else if (GradeOfSymptom >= 4){
@@ -58,6 +58,35 @@ function calcSeverity(){
    result.textContent = SeverityOfCOVID;
 
 } 
+
+function calcPriority(){
+  if(isChecked('immuneSurpressed')) {return 1};
+  
+  let isVaccinated = (getIntBySelect('selectVaccination') == 1); 
+  let riskByAge = getIntBySelect('selectAge');
+  if(riskByAge == 4 ){
+    if(!isVaccinated) {
+     return 1 // 75歳以上ワクチン未接種
+     } else {
+     return 3 // 75歳以上ワクチン接種
+    };
+  } else if(riskByAge == 3){
+    if(!isVaccinated){
+      if(hasRisk){ return 1  // 65歳以上ワクチン未接種で重症化リスクあり
+      } else { return 2 //　65歳以上ワクチン未接種 
+      }
+    } else { 
+      return 4 // 65歳以上ワクチン接種
+    }
+  } else { // 65歳未満
+    
+  }
+}
+
+
+function hasRisk(){
+   return true
+}
 
 
 function isChecked(name_of_element){
