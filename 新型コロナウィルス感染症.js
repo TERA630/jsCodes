@@ -10,6 +10,7 @@ window.onload = function(){
   let calcForm = document.querySelector('p[id="calcForm"]');
   renderSelect(calcForm);
   renderCheckBox(calcForm);
+  renderCheckBoxGroup(calcForm,'抗不整脈薬/anti-arrhythmic',['アミオダロン','ペプリジル','フレカイニド ','プロバフェノン ','キニジン']);
 } 
 
 function calcSeverity(){
@@ -94,4 +95,29 @@ function renderCheckBox(parentForm){ // checkBoxName,labelForCheckBox
     label.textContent = labelForCheckBox[i];
     parentForm.insertBefore(label,null);
 }
+}
+function renderCheckBoxGroup(element_of_parent,name_Of_Group,nameOfElements){
+
+    const roundedBoxFrame = document.createElement('div');
+    roundedBoxFrame.className = 'roundedBox';
+    element_of_parent.appendChild(roundedBoxFrame);
+
+    const titleOfBox = document.createElement('span');
+    titleOfBox.classList.add('roundedBoxTitle');
+    titleOfBox.textContent = name_Of_Group.split('/')[0];
+    roundedBoxFrame.appendChild(titleOfBox);
+
+    const contentsOfbox = document.createElement('p');
+    roundedBoxFrame.appendChild(contentsOfbox);
+
+    for(i=0; i< nameOfElements.length; i++){
+      let checkBoxElement = document.createElement('input');
+      checkBoxElement.name = `${name_Of_Group.split('/')[1]}-child${i}`;
+      checkBoxElement.type = 'checkbox';
+      contentsOfbox.appendChild(checkBoxElement);
+      let label = document.createElement('label');
+      label.htmlFor = checkBoxElement;
+      label.textContent = nameOfElements[i];
+      contentsOfbox.insertBefore(label,null);
+  }
 }

@@ -35,7 +35,7 @@ for(i=0;i < inputName.length; i++){
   calcForm.insertBefore(label,inputElement);
   let labelafter = document.createElement('label');
   labelafter.htmlFor = inputElement;
-  labelafter.textContent = labelForInput[i].split("-")[1]; // 区切り文字の後半
+  labelafter.textContent = labelForInput[i] ; // 区切り文字の後半
   calcForm.insertBefore(labelafter,inputElement.nextSibling);
   calcForm.insertBefore(document.createElement('br'),null);
 }

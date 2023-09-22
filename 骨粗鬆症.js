@@ -1,30 +1,53 @@
-
-const selectName = ["selectTscore"];
-const labelForSelect= ['骨密度値(Tスコア:若年成人の平均SD','脆弱性骨折'] ; 
-const optionOfSelect = [ ['Tスコア≧-1','-2.5＞Tスコア≧-1','Tスコア<-2.5'],['無し','あり']];
+ 
 
 window.onload= function(){
     const calcForm = document.querySelector('p[id="calcForm"]');
+    
+} 
 
-    renderSelectElements(calcForm);
-}
+function showTreatment(){
+    const resultFormElement = document.querySelector('div[name="resultForm"]');
+    let lifeStage = getValueFromSelectByName('selectMenopause');
+    let fragilitiyFracture = parseInt(getValueFromSelectByName('selectHasFlexture'));
+    let tScore =parseInt(getValueFromSelectByName('selectTscore'));
 
+    switch(fragilitiyFracture){
+      case 0:
+        if(tScore >= 2 ){recommend = '骨密度低下のため薬物治療が推奨されます'} else 
+        {recommend = '骨折もないし骨密度低下もなさそうです.'};
+        break;
+      case 1:
+        if(tScore>=2) {recommend = '重症骨粗鬆症として薬物治療が推奨されます。'
+        }  else if(tScore == 1){ recommend = '薬物治療が推奨されます。'
+        } else {
+          recommend = '骨折はあるけれどどうするべきか';
+        };
+        break;
+      case 2:
+        recommend = '骨密度にかかわらず薬物治療が推奨されます。'
+      default:
+    };
 
-function renderSelectElements(parentForm){ // parentForm:親要素 selectName[],labelForSelect[],optionForSelect[]
-    for(k=0; k< labelForSelect.length; k++){      
-     let selectElement = document.createElement('select');
-     selectElement.name = selectName[k];
-     parentForm.appendChild(selectElement);
-   
-     let label = document.createElement('label');
-     label.htmlFor = selectElement ; 
-     label.textContent = labelForSelect[k];
-     parentForm.insertBefore(label,selectElement);
-        for(l=0;l<optionOfSelect[k].length;l++){
-            let optionElement = document.createElement(['option']);
-            optionElement.text= optionOfSelect[k][l];
-            optionElement.value = l; 
-            selectElement.appendChild(optionElement);
-        }
+    if(lifeStage == 0){
+        recommend += ' '
+    } else if(lifeStage == 1){
+        recommend += 'SERM(選択的エストロゲン受容体モデュレーター)が推奨されます'
+    } else {
+        recommend += 'ビスホスホネートが第一選択です。3～5年継続しても骨折リスクが高ければデノスマブが推奨されます。'
     }
+    resultFormElement.textContent = recommend;
 }
+
+
+
+
+
+function getValueFromSelectByName(name_of_element){
+    let querySelect = document.querySelector(`select[name="${name_of_element}"]`)
+    let indexOfElement = querySelect?.selectedIndex ?? -1
+    return parseInt(querySelect.options[indexOfElement].value);
+   }
+
+   //　　最新の骨粗鬆症薬　　日老医誌2019;56:136-145臨床老年医学　
+
+   //

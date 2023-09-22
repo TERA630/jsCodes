@@ -4,11 +4,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-  
+    <script defer src="腎障害2.js"></script>
 
   </head>
 
   <body>
+    <div class="singleColumn">
+      <label for="selectAge">年齢</label>
+      <select name="selectAge">
+        <option value="0">75歳未満</option>
+        <option value="1">75歳以上</option>
+      </select>
+    </div>
     <div class="doubleColumnParent">
         <div class="doubleColumn">
             <label for="selectEGFR">eGFR(ml/min/1.73cm2)</label>
@@ -18,7 +25,7 @@
               <option value="2">45≦　＜60ml/min</option>
               <option value="3">30≦　＜45ml/min</option>
               <option value="4">15≦　＜30ml/min</option>
-              <option value="5">＜15ml/min r維持透析</option>
+              <option value="5">＜15ml/min 維持透析</option>
           </select>
         </div>
         <div class="doubleColumn">
@@ -29,7 +36,7 @@
           </select>
         </div>
     </div>
-    <div class="singleColum">
+    <div class="singleColumn">
       <label for="selectProteinUrea">蛋白尿(g/gCr)orアルブミン尿(mg/gCr)</label>
       <select name="selectProteinUrea">
         <option value="0">無し or 0.15g/gCr未満</option>
@@ -39,33 +46,67 @@
         <option value="1">30≦  ＜200mg/gcr</option>
         <option value="2">200mg/gCr以上</option>
       </select>
+      <label for="fluidRetention">体液貯留</label>
+      <select name="fluidRetention">
+        <option value="0">無し</option>
+        <option value="1">有り</option>
+      </select>
     </div>
-
-    <div class="singleColum" name="resultForm">
+    <div class="singleColumn">
+      <input type="button" value="計算" onclick="showTreatment()">
+    </div> 
+    <div class="enphasisBox" name="resultForm">
+      計算ボタンで対応を表示します。
     </div>
   </body>
 </html>
 
 <style>
+  /* one number: all side, two number top/bottom, left/right
+     tree number: top, left/right, bottom
+     four number: top, right, bottom, left
+     px: 1/96 inch (not pixel of device)  rem: font of root, 
+     vw: % width of viewpot  vh: %height of viewport
+     vmin: % width or height(lesser)   
+     margin: the color is tansparent, % is width of parent emlement(not height).
+     padding :distance between contents and margin, the color is background, % is width of parent element(not height) 
+     */
+
+
+ label{
+   margin-left: 0.5rem;
+   margin-right: 0.5rem;
+ }    
  .doubleColumnParent{
     background-color: antiquewhite;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    padding: 1px 1em;
-    margin: 2em auto auto 2em;
+    padding: 0.5px 2rem;
+    margin: 2rem 1rem;
  }
  .doubleColumn {
-    width: fit-content;
-    margin: 1px 1em;
-    padding : 0;
+    width:fit-content;
+    margin: 2px 1rem;
+    padding: 2px;
  }
- .singleColum {
+ .singleColumn {
     width: fit-content;
-    padding: 1px;
-    margin: 2em auto auto 4em;
-
+    padding: 2px 0.5rem 2px;
+    margin: 2px auto auto 4rem;
  }
 
+ .enphasisBox {
+    width: fit-content;
+    border-width: 2px;
+    border-style: solid;
+    padding: 0.5em;
+    margin: 2rem auto auto 4rem;
+ }
 
+ 
+label {
+  margin-left: 0.25em;
+  margin-right: 0.3em;
+}
 </style>

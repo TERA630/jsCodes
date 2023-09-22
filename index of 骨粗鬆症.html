@@ -6,9 +6,78 @@
     <script defer src="骨粗鬆症.js"></script>
  
   </head>
-
   <body>
-    <p class="calcForm">
-    </p>
+    <div class="doubleColumnParent">
+      <div class="doubleColumn">
+        <label for="selectTscore">TScore or 腰椎(測定不能なら大腿骨近位)骨密度</label>
+        <select name="selectTscore">
+          <option value="0">TScore-1以上かつYAM 80%以上</option>  
+          <option value="1">-2.5≦TScore＜-1 もしくは 70≦ YAM＜ 80%</option>
+          <opttion value ="2">TScore -2.5未満 または YAM 60≦YAM＜70% </opttion>
+          <option value="3">TScore -2.5未満 YAM60%未満</option> 
+        </select>
+      </div>
+      <div class="doubleColumn">
+        <label for="selectHasFlexture">脆弱性骨折(立った姿勢からの転倒orそれ以下の外力)</label>
+        <select name="selectHasFlexture">
+          <option value="0">無し</option>
+          <option value="1">肋骨､骨盤､上腕骨近位､橈骨遠位端､下腿骨</option>
+          <option value="2">大腿骨近位部骨折または椎体骨折</option>
+        </select>
+      </div>
+    </div>
+    <div class="doubleColumnParent">
+      <div class="doubleColumn">
+        <label for="selectMenopause">月経・年齢</label>
+        <select name="selectMenopause">
+          <option value="0">閉経前</option>  
+          <option value="1">周閉経期～70歳未満</option>
+          <option value="2">70歳以上</option> 
+        </select>
+      </div>
+ 
+    </div>
+
+
+    <div class="singleColum">
+      <input type="button" value="計算" onclick="showTreatment()">
+    </div> 
+    <div class="enphasisBox" name="resultForm">
+      計算ボタンで対応を表示します。
+    </div>
   </body>
+
+
+<style>
+.doubleColumnParent{
+  background-color: antiquewhite;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 0.5px 2rem;
+  margin: 2rem 1rem;
+}
+.doubleColumn {
+  width: fit-content;
+  margin: 0.5rem 1rem;
+  padding: 0.5rem;
+}
+.singleColum {
+  width: fit-content;
+  padding: 0.5rem;
+  margin: 2rem auto auto 4rem;
+}                 
+                                    
+.enphasisBox {
+  width: fit-content;
+  border-width: 2px;
+  border-style: solid;
+  padding: 0.5em;
+  margin: 2rem auto auto 4rem;
+}
+
+  </style>
+
+ 
+
 </html>
