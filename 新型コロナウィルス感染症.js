@@ -1,7 +1,9 @@
 
  const selectName = ['selectAge','selectSpO2','selectOnset','selectSymptom','selectVaccination'];
  const labelForSelect = ['年齢','酸素飽和度(SpO2)','発症からの時期','臨床状態','ワクチン接種'];
- const optionOfSelect = [['12歳未満','12歳以上60歳未満','60≦＜64歳','65歳≦<75歳','75歳以上'],['≧96','93<<96%','<93%'],['3日以内','5日以内','7日以内'],['呼吸器症状なし','咳のみ､呼吸困難なし','呼吸困難､肺炎所見','酸素投与が必要','ICUor人工呼吸器が必要'],['未接種','接種済み']];
+ const optionOfSelect = [['12歳未満','12歳以上60歳未満','60≦＜64歳','65歳≦<75歳','75歳以上'],['≧96','93<<96%','<93%'],['3日以内','5日以内','7日以内'],
+                ['呼吸器症状なし','咳のみ､呼吸困難なし','呼吸困難､肺炎所見','酸素投与が必要','ICUor人工呼吸器が必要'],
+                ['未接種','最終接種半年以上前','半年以内接種済み,計3回未満','半年以内接種ずみ,計3回以上']];
  const checkBoxName = ['Obesity','smoker','immuneSurpressed','malignancy','diabetes','chronicLiverDiease','CKD','HT','divelopmentalDisorder'];
  const labelForCheckBox = ['肥満BMI≧25kg/m2-1.75','喫煙歴','免疫抑制疾患・免疫抑制剤','悪性腫瘍','糖尿病-1.74','慢性肝障害','慢性腎臓病','高血圧-1.33','神経発達障害'];
  const labelForDiseaseGroup = [['慢性肺疾患','気管支喘息','閉塞性肺疾患(COPD)-2.51'],
@@ -31,10 +33,7 @@
 window.onload = function(){
   let calcForm = document.querySelector('p[id="calcForm"]');
   renderSelect(calcForm);
- renderCheckBox(calcForm);
-  for(let i=0; i< labelforMedications.length; i++){ 
-    renderCheckBoxGroup(calcForm,labelforMedications[i][0],labelforMedications[i][1]);
-  }
+  renderCheckBox(calcForm);
 
 } 
 
@@ -45,7 +44,7 @@ function calcSeverity(){
 
    if(GradeOfSaturation ==0 && GradeOfSymptom <= 1){
      SeverityOfCOVID = '軽症';
-     alert('治療薬の優先度は'+calcPriority()+'です');
+       alert('治療薬の優先度は'+calcPriority()+'です');
    } else if ( GradeOfSaturation == 1 || GradeOfSymptom<=2 ){
      SeverityOfCOVID = '中等症Ⅰ';
      alert('治療薬の優先度は'+calcPriority()+'です');
@@ -57,35 +56,49 @@ function calcSeverity(){
    let result =  document.querySelector('p[id="resultForm"]')
    result.textContent = SeverityOfCOVID;
 
+   const medicationForm = document.querySelector('p[id="medicationForm"]');
+
+   for(let i=0; i< labelforMedications.length; i++){ 
+    renderCheckBoxGroup(medicationForm,labelforMedications[i][0],labelforMedications[i][1]);
+  }
 } 
 
 function calcPriority(){
   if(isChecked('immuneSurpressed')) {return 1};
   
-  let isVaccinated = (getIntBySelect('selectVaccination') == 1); 
+  let isVaccinated = (getIntBySelect('selectVaccination') >= 2); 
   let riskByAge = getIntBySelect('selectAge');
-  if(riskByAge == 4 ){
-    if(!isVaccinated) {
-     return 1 // 75歳以上ワクチン未接種
-     } else {
-     return 3 // 75歳以上ワクチン接種
-    };
-  } else if(riskByAge == 3){
-    if(!isVaccinated){
-      if(hasRisk){ return 1  // 65歳以上ワクチン未接種で重症化リスクあり
-      } else { return 2 //　65歳以上ワクチン未接種 
+
+
+  //               < 65 | 65-75       | >=75
+  //   vaccinated  | 5 or 4 |  4 or 3 | 3
+  // Not vaccinated| 5 or 2 |  2 or 1 | 1  
+  
+  //                              <65 | 65-75
+  //  vaccinated has no risk       5  |  4
+  //  vaccinated has risk          4  |  3 
+  //  not vaccinated has no risk   5  |  2
+  //  not vaccinated has risk      2  |  1 
+
+
+if(riskByAge == 4) return isVaccinated? 3 : 1;          // 75歳以上　適切なワクチン状態なら優先度3、でなければ優先度1
+
+if(riskByAge <= 2) {　//　65歳未満
+ if(!hasRisk()) { return 5 } // リスクなしなら、ワクチン接種にかかわらず投与推奨されず
+  else {
+      return isVaccinated? 4 : 2;  // 重症化リスクあり、ワクチン接種未→優先度2、接種済みなら優先度4
       }
-    } else { 
-      return 4 // 65歳以上ワクチン接種
+  } else { // 65歳以上
+    if(hasRisk){ // 65歳以上リスクあり
+    return isVaccinated? 3 : 1
+    } else {  // 65歳以上リスクなし
+    return isVaccinated? 4 : 2
     }
-  } else { // 65歳未満
-    
   }
 }
 
-
 function hasRisk(){
-   return true
+   return isChecked('Obesity');
 }
 
 
@@ -95,6 +108,7 @@ function isChecked(name_of_element){
   for(let i=0;i<checkedElements.length;i++){
     result.push(checkedElements[i].name);
   }
+ 
   return result.includes(name_of_element);
 
 }
