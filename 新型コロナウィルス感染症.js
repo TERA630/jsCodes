@@ -1,15 +1,19 @@
 
- const selectName = ['selectAge','selectSpO2','selectOnset','selectSymptom','selectVaccination'];
- const labelForSelect = ['年齢','酸素飽和度(SpO2)','発症からの時期','臨床状態','ワクチン接種'];
- const optionOfSelect = [['12歳未満','12歳以上60歳未満','60≦＜64歳','65歳≦<75歳','75歳以上'],['≧96','93<<96%','<93%'],['3日以内','5日以内','7日以内'],
+
+ const clinicalStatusLabeAndName = ['酸素飽和度(SpO2)/selectSpO2','発症からの時期/selectOnset','臨床状態/selectSymptom','ワクチン接種/selectVaccination'];
+ const ClinicalStatusOptions = [['≧96','93<<96%','<93%'],['3日以内','5日以内','7日以内'],
                 ['呼吸器症状なし','咳のみ､呼吸困難なし','呼吸困難､肺炎所見','酸素投与が必要','ICUor人工呼吸器が必要'],
                 ['未接種','最終接種半年以上前','半年以内接種済み,計3回未満','半年以内接種ずみ,計3回以上']];
- const checkBoxName = ['Obesity','smoker','immuneSurpressed','malignancy','diabetes','chronicLiverDiease','CKD','HT','divelopmentalDisorder'];
- const labelForCheckBox = ['肥満BMI≧25kg/m2-1.75','喫煙歴','免疫抑制疾患・免疫抑制剤','悪性腫瘍','糖尿病-1.74','慢性肝障害','慢性腎臓病','高血圧-1.33','神経発達障害'];
- const labelForDiseaseGroup = [['慢性肺疾患','気管支喘息','閉塞性肺疾患(COPD)-2.51'],
-                    ['心血管系疾患-1.48','心筋梗塞','脳卒中','心不全','狭心症(ニトログリセリン処方)','冠動脈バイパス後','経皮的冠動脈形成後','頸動脈内膜剥離術'],
-                    ['神経発達障害','脳性麻痺','ダウン症','遺伝性疾患','その他重度の先天異常']
-]
+
+ const checkBoxNameAndlabels = ['肥満/Obesity/BMI≧25kg/m2','喫煙歴/smoker/過去30日以内､100本以上の喫煙歴',
+              '免疫抑制/immuneSurpressed/免疫抑制剤の使用あるいは免疫抑制状態','悪性腫瘍/malignancy',
+              '血液疾患/boneMallowDisease/鎌状赤血球症',
+              '慢性肺疾患/chronicRespiratryDisease/閉塞性肺疾患､気管支喘息(連日吸入処方)',
+              '心疾患/vascularDisease/心不全､虚血性心疾患,心筋症',
+              '神経疾患/neuroDisease/脳血管障害,頸動脈内膜剥離術後,多発性硬化症､重症筋無色症',
+              '糖尿病/diabetes', '慢性腎障害/CKD','慢性肝疾患/CLD/肝硬変','高血圧/HT','AIDS/AIDS/あるいはコントロール不良のHIV感染',
+              '神経発達障害/divelopmentalDisorder/脳性麻痺､ダウン症､重度の先天障害や遺伝性疾患'];
+
 
  const labelforMedications = [['抗不整脈薬/anti-arrhythmic',['アミオダロン','ペプリジル（ペプリコール)','フレカイニド(タンボコール)','プロバフェノン(プロノン)','キニジン']],
                     ['抗凝固薬/anticoagulate',['リバーロキサパン(イグザレルト)']],
@@ -30,11 +34,12 @@
 
 // 男性2.09 入院でCKD,CVD,DL,COPD,HTN,DM,CVD,LC,Malignancyのいずれからあれば15%死亡
 
-window.onload = function(){
-  let calcForm = document.querySelector('p[id="calcForm"]');
-  renderSelect(calcForm);
-  renderCheckBox(calcForm);
 
+window.onload = function(){
+  let clinicalForm = document.querySelector('p[id="clinicalStatus"]');
+  renderSelect(clinicalForm,clinicalStatusLabeAndName,ClinicalStatusOptions);
+  let complicationForm = document.querySelector('p[id="complication"]');
+  renderCheckBox(complicationForm,checkBoxNameAndlabels);
 } 
 
 function calcSeverity(){
@@ -43,24 +48,27 @@ function calcSeverity(){
    let SeverityOfCOVID = '';
 
    if(GradeOfSaturation ==0 && GradeOfSymptom <= 1){
-     SeverityOfCOVID = '軽症';
-       alert('治療薬の優先度は'+calcPriority()+'です');
+    let priority = calcPriority();
+    let statement = '';
+    if(priority == 5) statement ='抗ウィルス剤による重症化予防の適応外です｡';
+    else  statement = `治療薬の優先度は${priority}です｡`;
+    SeverityOfCOVID = `軽症です｡${statement}`;
    } else if ( GradeOfSaturation == 1 || GradeOfSymptom<=2 ){
-     SeverityOfCOVID = '中等症Ⅰ';
-     alert('治療薬の優先度は'+calcPriority()+'です');
+     SeverityOfCOVID = '中等症Ⅰです。入院適応です。';
    } else if (GradeOfSaturation == 2  || GradeOfSymptom<= 3){
-     SeverityOfCOVID = '中等症Ⅱ'
+     SeverityOfCOVID = '中等症Ⅱです。緊急対応を要します。'
    } else if (GradeOfSymptom >= 4){
      SeverityOfCOVID = '重症'
    }
-   let result =  document.querySelector('p[id="resultForm"]')
+   let result =  document.querySelector('p[id="resultForm"]');
+
    result.textContent = SeverityOfCOVID;
 
-   const medicationForm = document.querySelector('p[id="medicationForm"]');
+//   const medicationForm = document.querySelector('p[id="medicationForm"]');
 
-   for(let i=0; i< labelforMedications.length; i++){ 
-    renderCheckBoxGroup(medicationForm,labelforMedications[i][0],labelforMedications[i][1]);
-  }
+// for(let i=0; i< labelforMedications.length; i++){ 
+ // renderCheckBoxGroup(medicationForm,labelforMedications[i][0],labelforMedications[i][1]);
+ // }
 } 
 
 function calcPriority(){
@@ -82,23 +90,25 @@ function calcPriority(){
 
 
 if(riskByAge == 4) return isVaccinated? 3 : 1;          // 75歳以上　適切なワクチン状態なら優先度3、でなければ優先度1
+if(riskByAge <= 2) {//　65歳未満
+ if(!hasRisk()) return 5  // リスクなしなら、ワクチン接種にかかわらず投与推奨されず
+ else  return isVaccinated? 4 : 2;  // 重症化リスクあり、ワクチン接種未→優先度2、接種済みなら優先度4
 
-if(riskByAge <= 2) {　//　65歳未満
- if(!hasRisk()) { return 5 } // リスクなしなら、ワクチン接種にかかわらず投与推奨されず
-  else {
-      return isVaccinated? 4 : 2;  // 重症化リスクあり、ワクチン接種未→優先度2、接種済みなら優先度4
-      }
-  } else { // 65歳以上
-    if(hasRisk){ // 65歳以上リスクあり
-    return isVaccinated? 3 : 1
-    } else {  // 65歳以上リスクなし
-    return isVaccinated? 4 : 2
-    }
-  }
+} else { // 65歳以上
+    if(hasRisk) return isVaccinated? 3 : 1 // 65歳以上リスクあり
+    else return isVaccinated? 4 : 2 // 65歳以上リスク無
+}
+
 }
 
 function hasRisk(){
-   return isChecked('Obesity');
+  let checkedElements = document.querySelectorAll('input[type="checkbox"]:checked');
+  let result =[];
+  for(let i=0;i<checkedElements.length;i++){
+    result.push(checkedElements[i].name);
+  }
+  let checked = `${result}`;
+  alert(checked);
 }
 
 
@@ -144,61 +154,52 @@ function getIntBySelect(nameOfElementObject){ // return : 　nameOfElementObject
 }
 
 
-function renderSelect(parentForm){ // selectName, labelForSelect,optionOfSelect
+function renderSelect(parentForm,label_and_name_array, options_Array){ // selectName, labelForSelect,optionOfSelect
 
-for(k=0; k< labelForSelect.length; k++){   
+for(let k=0; k< label_and_name_array.length; k++){ 
+  
  let selectElement = document.createElement('select');
- selectElement.name = selectName[k];
+ selectElement.name = label_and_name_array[k].split('/')[1];
  parentForm.appendChild(selectElement);
+
  let label = document.createElement('label');
- label.htmlFor = selectElement ; 
- label.textContent = labelForSelect[k];
+ label.htmlFor = selectElement; 
+ label.textContent = label_and_name_array[k].split('/')[0];
  parentForm.insertBefore(label,selectElement);
- 
- for(l=0;l<optionOfSelect[k].length;l++){
+
+ for(let l=0;l<options_Array[k].length;l++){
     let optionElement = document.createElement(['option']);
-   optionElement.text= optionOfSelect[k][l];
+    optionElement.text= options_Array[k][l];
     optionElement.value = l; 
    selectElement.appendChild(optionElement);
   }
-  parentForm.insertBefore(document.createElement('br'),null);
  }
 }
 
-function renderCheckBox(parentForm){ // checkBoxName,labelForCheckBox
- for(i=0; i< labelForCheckBox.length; i++){
+function renderCheckBox(parentForm,label_and_name_array){ // checkBoxName,labelForCheckBox
+ for(let i=0; i< label_and_name_array.length; i++){
+    let row = document.createElement('div');
+ 
+    parentForm.appendChild(row);
+
     let checkBoxElement = document.createElement('input');
-    checkBoxElement.name = checkBoxName[i];
+    let rowData = label_and_name_array[i].split('/');
     checkBoxElement.type = 'checkbox';
-    parentForm.appendChild(checkBoxElement);
+    checkBoxElement.name = rowData[1];
+    row.appendChild(checkBoxElement);
+
     let label = document.createElement('label');
     label.htmlFor = checkBoxElement;
-    label.textContent = labelForCheckBox[i];
-    parentForm.insertBefore(label,null);
+    label.textContent = rowData[0] 
+    row.insertBefore(label,null);
+ 
+    let explanation = document.createElement('div');
+  
+    if(rowData[2] != undefined) {
+      explanation.textContent = rowData[2];
+    }
+    parentForm.appendChild(explanation);
+
+ }
 }
-}
-function renderCheckBoxGroup(element_of_parent,name_Of_Group,nameOfElements){
-
-    const roundedBoxFrame = document.createElement('div');
-    roundedBoxFrame.className = 'roundedBox';
-    element_of_parent.appendChild(roundedBoxFrame);
-
-    const titleOfBox = document.createElement('span');
-    titleOfBox.classList.add('roundedBoxTitle');
-    titleOfBox.textContent = name_Of_Group.split('/')[0];
-    roundedBoxFrame.appendChild(titleOfBox);
-
-    const contentsOfbox = document.createElement('p');
-    roundedBoxFrame.appendChild(contentsOfbox);
-
-    for(let i=0; i< nameOfElements.length; i++){
-      let checkBoxElement = document.createElement('input');
-      checkBoxElement.name = `${name_Of_Group.split('/')[1]}-child${i}`;
-      checkBoxElement.type = 'checkbox';
-      contentsOfbox.appendChild(checkBoxElement);
-      let label = document.createElement('label');
-      label.htmlFor = checkBoxElement;
-      label.textContent = nameOfElements[i];
-      contentsOfbox.insertBefore(label,null);
-  }
-}
+ 

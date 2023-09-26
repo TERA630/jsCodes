@@ -8,6 +8,30 @@
   </head>
 
   <body>
+    <p id='profileOfPatent'>
+  
+       <label for="selectAge">年齢</label>
+       <select name="selectAge">
+        <option value='0'>12歳未満</option>
+        <option value='1'>12≦ ＜60歳</option>
+        <option value='2'>60≦ ＜64歳</option>
+        <option value='3'>65≦ ＜75歳</option>
+        <option value='4'>75歳以上</option>
+       </select>
+ 
+        <label>性別</label>
+        <select name="selectFertillity">
+          <option value="0">男性</option>
+          <option value="1">女性(妊娠や授乳をしていない)</option>
+          <option value="2">妊婦(妊娠の可能性を含む)</option>
+          <option value="3">授乳婦</option>
+        </select>
+    </p>
+
+    <p id='clinicalStatus'></p>
+
+    <p id='complication'></p>
+
     <p id='calcForm'>
       <input type="button" value="重症度評価" onclick="calcSeverity()">
     </p>
@@ -18,12 +42,31 @@
     <p id='medicationForm'></p> 
   </body>
 <style>
+
+p[id='profileOfPatent']{
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #00a8e0;
+  padding: 0.5em;
+}
+
+p[id='clinicalStatus']{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #ff5252;
+  padding: 0.5em;
+}
+p[id='complication']{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
  
+
 .roundedBox {
   position: relative;
   margin: 2em 0;
   padding:  0.5em 1em;
-  border: solid 3px crimson;
+  border: solid 3px #ff5252;
 }
 .roundedBox .roundedBoxTitle{
   position: absolute;
@@ -34,7 +77,7 @@
   height: 25px;
   line-height: 25px;
   font-size: 17px;
-  background-color: crimson;
+  background-color: #ff5252;
   color: white;
   font-weight: bold;
   border-radius: 5px 5px 0 0;
