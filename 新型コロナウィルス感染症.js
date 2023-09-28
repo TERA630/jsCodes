@@ -38,8 +38,8 @@
 window.onload = function(){
   let clinicalForm = document.querySelector('p[id="clinicalStatus"]');
   renderSelect(clinicalForm,clinicalStatusLabeAndName,ClinicalStatusOptions);
-  let complicationForm = document.querySelector('p[id="complication"]');
-  renderCheckBox(complicationForm,checkBoxNameAndlabels);
+  let complications= document.querySelector('table[id="complication"]');
+  renderCheckBox(complications,checkBoxNameAndlabels);
 } 
 
 function calcSeverity(){
@@ -107,8 +107,7 @@ function hasRisk(){
   for(let i=0;i<checkedElements.length;i++){
     result.push(checkedElements[i].name);
   }
-  let checked = `${result}`;
-  alert(checked);
+  return (result.length !=0);
 }
 
 
@@ -176,30 +175,34 @@ for(let k=0; k< label_and_name_array.length; k++){
  }
 }
 
-function renderCheckBox(parentForm,label_and_name_array){ // checkBoxName,labelForCheckBox
+function renderCheckBox(table_element,label_and_name_array){ // checkBoxName,labelForCheckBox
+
+
  for(let i=0; i< label_and_name_array.length; i++){
-    let row = document.createElement('div');
- 
-    parentForm.appendChild(row);
+    let tableRow = document.createElement('tr');
+    table_element.appendChild(tableRow);
+
+    let columnFirst = document.createElement('td');
+    tableRow.appendChild(columnFirst);
 
     let checkBoxElement = document.createElement('input');
-    let rowData = label_and_name_array[i].split('/');
+    let rowHeader = label_and_name_array[i].split('/');
     checkBoxElement.type = 'checkbox';
-    checkBoxElement.name = rowData[1];
-    row.appendChild(checkBoxElement);
+    checkBoxElement.name = rowHeader[1];
+    columnFirst.appendChild(checkBoxElement);
 
     let label = document.createElement('label');
     label.htmlFor = checkBoxElement;
-    label.textContent = rowData[0] 
-    row.insertBefore(label,null);
- 
-    let explanation = document.createElement('div');
-  
-    if(rowData[2] != undefined) {
-      explanation.textContent = rowData[2];
-    }
-    parentForm.appendChild(explanation);
+    label.textContent = rowHeader[0] 
+    columnFirst.insertBefore(label,null);
 
+    let columnSecond = document.createElement('td');
+    tableRow.appendChild(columnSecond);
+
+    if(rowHeader[2] != undefined) {
+      columnSecond.textContent = rowHeader[2];
+    }
  }
+ 
 }
  

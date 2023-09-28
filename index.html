@@ -30,7 +30,11 @@
 
     <p id='clinicalStatus'></p>
 
-    <p id='complication'></p>
+    <table id="complication">
+      <tr>
+      <th colspan="2">重症化リスク</th>
+      </tr>
+    </table></p>
 
     <p id='calcForm'>
       <input type="button" value="重症度評価" onclick="calcSeverity()">
@@ -42,6 +46,21 @@
     <p id='medicationForm'></p> 
   </body>
 <style>
+
+table{
+  border-collapse: collapse;
+}
+
+th{
+  border: solid 1px #0f4b80;
+  color: #fafafa;
+  background-color: #0f4b80;
+  padding: 0.3rem;
+}
+td{
+  border: solid 1px;
+  padding: 0.3rem;
+}
 
 p[id='profileOfPatent']{
   display: flex;
@@ -56,10 +75,20 @@ p[id='clinicalStatus']{
   background-color: #ff5252;
   padding: 0.5em;
 }
-p[id='complication']{
-  display: grid;
-  grid-template-columns: 1fr 2fr;
+ 
+
+.boxtitle{
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height:  25px;
+  line-height : 25px;
+  font-size: 17px;
+  background-color: #ff5252;
 }
+
  
 
 .roundedBox {
