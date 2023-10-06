@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script defer src="新型コロナウィルス感染症.js"></script>
+
+  </head>
+
+  <body>
+    <p id='profileOfPatent'>
+  
+       <label for="selectAge">年齢</label>
+       <select name="selectAge">
+        <option value='0'>12歳未満</option>
+        <option value='1'>12≦ ＜60歳</option>
+        <option value='2'>60≦ ＜64歳</option>
+        <option value='3'>65≦ ＜75歳</option>
+        <option value='4'>75歳以上</option>
+       </select>
+ 
+        <label>性別</label>
+        <select name="selectFertillity">
+          <option value="0">男性</option>
+          <option value="1">女性(妊娠や授乳をしていない)</option>
+          <option value="2">妊婦(妊娠の可能性を含む)</option>
+          <option value="3">授乳婦</option>
+        </select>
+
+        <label for="selectRenal">腎障害</label>
+        <select name="selectRenal">
+          <option value="0">未検査</option>
+          <option value="1">正常(eGFR 80ml/min以上)</option>
+          <option value="2">軽度低下(eGFR 60~80ml/min)<option>
+          <option value="3">低下(GFR 30~60ml/min)</option>
+          <option value="4">高度低下(GFR 30未満)</option>
+          <option value="5">透析</option>
+          </option>
+          </option> 
+        </select>
+    </p>
+
+    <p id='clinicalStatus'></p>
+
+    <table id="complication">
+      <tr>
+      <th colspan="2">重症化リスク</th>
+      </tr>
+    </table></p>
+
+    <p id='calcForm'>
+      <input type="button" value="重症度評価" onclick="calcSeverity()">
+    </p>
+    <p name = 'medicationList'></p>
+    <p id="commentForm"></p>
+    <p id='resultForm'></p>
+
+    <p id='medicationForm'></p> 
+  </body>
+<style>
+
+table{
+  border-collapse: collapse;
+}
+
+th{
+  border: solid 1px #0f4b80;
+  color: #fafafa;
+  background-color: #0f4b80;
+  padding: 0.3rem;
+}
+td{
+  border: solid 1px;
+  padding: 0.3rem;
+}
+
+p[id='profileOfPatent']{
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #00a8e0;
+  padding: 0.5em;
+}
+
+p[id='clinicalStatus']{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #ff5252;
+  padding: 0.5em;
+}
+ 
+
+.boxtitle{
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height:  25px;
+  line-height : 25px;
+  font-size: 17px;
+  background-color: #ff5252;
+}
+
+ 
+
+.roundedBox {
+  position: relative;
+  margin: 2em 0;
+  padding:  0.5em 1em;
+  border: solid 3px #ff5252;
+}
+.roundedBox .roundedBoxTitle{
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 17px;
+  background-color: #ff5252;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+.roundedBox div {
+  display:flex;
+  margin: 0;
+  padding: 0;
+}
+
+label {
+  margin-left: 0.25em;
+  margin-right: 0.3em;
+}
+
+
+</style>
+
+
+</html>

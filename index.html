@@ -1,129 +1,135 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <script defer src="新型コロナウィルス感染症.js"></script>
+    <script defer src="貧血.js"></script>
 
   </head>
+<body>
+ <div class="wrapper" name="labResult"> 
+</div>
 
-  <body>
-    <p id='profileOfPatent'>
-  
-       <label for="selectAge">年齢</label>
-       <select name="selectAge">
-        <option value='0'>12歳未満</option>
-        <option value='1'>12≦ ＜60歳</option>
-        <option value='2'>60≦ ＜64歳</option>
-        <option value='3'>65≦ ＜75歳</option>
-        <option value='4'>75歳以上</option>
-       </select>
- 
-        <label>性別</label>
-        <select name="selectFertillity">
-          <option value="0">男性</option>
-          <option value="1">女性(妊娠や授乳をしていない)</option>
-          <option value="2">妊婦(妊娠の可能性を含む)</option>
-          <option value="3">授乳婦</option>
-        </select>
-    </p>
+<input type="button" value="計算" class="styledButton" onclick="calcForm()">
 
-    <p id='clinicalStatus'></p>
+<div class="boxInterpose" name="textRecommend"> 検査結果を入力ください</div>
 
-    <table id="complication">
-      <tr>
-      <th colspan="2">重症化リスク</th>
-      </tr>
-    </table></p>
+</div>
 
-    <p id='calcForm'>
-      <input type="button" value="重症度評価" onclick="calcSeverity()">
-    </p>
-    <p name = 'medicationList'></p>
-    <p id="commentForm"></p>
-    <p id='resultForm'></p>
 
-    <p id='medicationForm'></p> 
-  </body>
+</body>
+
 <style>
+    .wrapper{
+        display: grid;
+        width: fit-content;
+        padding: 0.8rem;
+        color: #eee;
+        text-shadow: 1px 1px 1px #000;
+        grid-template-columns: 11rem 8rem 4rem 11rem 8rem 4rem;
+        background-color: #70a1c7;
+        border-radius: 10px;
+        box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),inset -2px -2px 3px rgba(0, 0, 0, 0.6)
+      }         
+  
+    .wrapper > label{
+      padding-left: 0.5rem;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+    }
 
-table{
-  border-collapse: collapse;
-}
+    input {
+      margin: 0.3rem 0;
+      border: none;
+      padding-top: 0.3rem 0 0.3rem 1rem;
+      background: #eee;
+      box-shadow: inset 1px 1px #bbb;
+    }
 
-th{
-  border: solid 1px #0f4b80;
-  color: #fafafa;
-  background-color: #0f4b80;
-  padding: 0.3rem;
-}
-td{
-  border: solid 1px;
-  padding: 0.3rem;
-}
-
-p[id='profileOfPatent']{
-  display: flex;
-  flex-wrap: wrap;
-  background-color: #00a8e0;
-  padding: 0.5em;
-}
-
-p[id='clinicalStatus']{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background-color: #ff5252;
-  padding: 0.5em;
-}
+    input[type='number']:focus{
+      outline: 0;
+      box-shadow: inset 0 0 0 1px rgb(33, 150, 243);
+    }
  
 
-.boxtitle{
-  position: absolute;
-  display: inline-block;
-  top: -27px;
-  left: -3px;
-  padding: 0 9px;
-  height:  25px;
-  line-height : 25px;
-  font-size: 17px;
-  background-color: #ff5252;
-}
+    .styledButton{
+      border: 0;
+      line-height: 2.5;
+      padding: 0 20px;
+      font-size: 1rem;
+      text-align: center;
+      color: white;
+      text-shadow: 1px 1px 1px #000;
+      border-radius: 10px;
+      background-color: #ff5252;
+      background-image: linear-gradient(to top left,#ff7878,#ff5252);
+      box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),inset -2px -2px 3px rgba(0, 0, 0, 0.6)
 
- 
+    }
 
-.roundedBox {
-  position: relative;
-  margin: 2em 0;
-  padding:  0.5em 1em;
-  border: solid 3px #ff5252;
-}
-.roundedBox .roundedBoxTitle{
-  position: absolute;
-  display: inline-block;
-  top: -27px;
-  left: -3px;
-  padding: 0 9px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 17px;
-  background-color: #ff5252;
-  color: white;
-  font-weight: bold;
-  border-radius: 5px 5px 0 0;
-}
-.roundedBox div {
-  display:flex;
-  margin: 0;
-  padding: 0;
-}
-
-label {
-  margin-left: 0.25em;
-  margin-right: 0.3em;
-}
+    .boxInterpose{
+      margin: 2rem 0;
+      background: whitesmoke;
+      border-left: double 7px #70a1c7;
+      border-right: double 7px #70a1c7;
+    }
 
 
-</style>
 
 
-</html>
+
+
+
+
+  .boxtitle{
+    position: absolute;
+    display: inline-block;
+    top: -27px;
+    left: -3px;
+    padding: 0 9px;
+    height:  25px;
+    line-height : 25px;
+    font-size: 17px;
+    background-color: #ff5252;
+  }
+  
+   
+  
+  .roundedBox {
+    position: relative;
+    margin: 2em 0;
+    padding:  0.5em 1em;
+    border: solid 3px #ff5252;
+  }
+  .roundedBox .roundedBoxTitle{
+    position: absolute;
+    display: inline-block;
+    top: -27px;
+    left: -3px;
+    padding: 0 9px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 17px;
+    background-color: #ff5252;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+  }
+  .roundedBox div {
+    display:flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  label {
+    margin-left: 0.25em;
+    margin-right: 0.3em;
+  }
+  
+  
+  </style>
+  
+  
+  </html>
+
