@@ -5,6 +5,9 @@
                 ['呼吸器症状なし','咳のみ､呼吸困難なし','高熱、強い咽頭痛あり','呼吸困難､肺炎所見','酸素投与が必要','ICUor人工呼吸器が必要'],
                 ['未接種','最終接種半年以上前','半年以内接種済み,計3回未満','半年以内接種ずみ,計3回以上']];
 
+ const stateForSeverityOfCOVID = ['軽症です。','中等症I(呼吸不全なし)です。入院加療が推奨されます。','中等症Ⅱ（呼吸不全あり）であり、入院のうえ、他疾患（嚥下性肺炎、二次性細菌性肺炎、うっ血性心不全など）除外のうえ、ステロイド治療が推奨されます。'
+ ,'重症であり、集中治療が可能な医療機関での加療が必要です。'];
+
  const checkBoxNameAndlabels = ['肥満/Obesity/BMI≧25kg/m2','喫煙歴/smoker/過去30日以内､100本以上の喫煙歴',
               '免疫抑制/immuneSurpressed/免疫抑制剤の使用あるいは免疫抑制状態','悪性腫瘍/malignancy',
               '血液疾患/boneMallowDisease/鎌状赤血球症',
@@ -24,12 +27,12 @@
                     ['抗真菌薬/antifungus',['ボリコナゾール(ブイフェンド)']],
                     ['抗悪性腫瘍薬/antitumor',['ベネトクラウス(ベネクレクスタ)','アパルタミド(アーリーダ)']],
                     ['高脂血症治療薬/lipid-lowering',['ロミタピド(ジャクスタピッド)']],
-                    ['心不全治療薬/anti-heartFailure',['イバブラジン(コララン)']] // トランコロン　フィネレノン　糖尿病合併慢性腎臓病治療薬
-      ]; // フェンタニル製剤､オキシコドン製剤､リドカイン､　ベラパミル､　ダサチニブ(スプリセル)､ゲフィチニブ(イレッサ)､ニロチニブ(タシグナ)併用注意
-      //　ビンカアルカイド(ビンブラスチン､ビンクリスチン)､イリノテカン､トレミフェン(フェアストン)､タモキシフェン(ノルバデックス)､エベロリムス(アフィニトール)
-      //　シロリムス　イブルチニブ､エンコラフェニブ　セリチニブ　アファチニブ､ケトコナゾール､イトリゾール､ミコナゾール(フロリード)､イサブコナゾニウム(クレセンバ)　フルコナゾール､ホスフルコナゾール､
-      //　クラリスロマイシン､エリスロマイシン､　コルヒチン､クエチアピン､アムロジン､ノルバスク､ジルチアゼム(ヘルベッサー)､ニカルジピン､フェロジピン､ニフェジピン､ニトレンジピン､ニルバジピン
-      //　ボセンタン(トラクリア)､リオシグアト(アデムパス)､アトルバスタチン､シンバスタチン､
+                    ['心不全治療薬/anti-heartFailure',['イバブラジン(コララン)']] // トランコロン,フィネレノン,糖尿病合併慢性腎臓病治療薬
+      ]; // フェンタニル製剤､オキシコドン製剤､リドカイン､ ベラパミル､ダサチニブ(スプリセル)､ゲフィチニブ(イレッサ)､ニロチニブ(タシグナ)併用注意
+      // ビンカアルカイド(ビンブラスチン､ビンクリスチン)､イリノテカン､トレミフェン(フェアストン)､タモキシフェン(ノルバデックス)､エベロリムス(アフィニトール)
+      // シロリムス,イブルチニブ､エンコラフェニブ,セリチニブ,アファチニブ､ケトコナゾール､イトリゾール､ミコナゾール(フロリード)､イサブコナゾニウム(クレセンバ),フルコナゾール､ホスフルコナゾール､
+      // クラリスロマイシン､エリスロマイシン､,コルヒチン､クエチアピン､アムロジン､ノルバスク､ジルチアゼム(ヘルベッサー)､ニカルジピン､フェロジピン､ニフェジピン､ニトレンジピン､ニルバジピン
+      // ボセンタン(トラクリア)､リオシグアト(アデムパス)､アトルバスタチン､シンバスタチン､
  const labelForContraindicationOfBothDrugs=[ // ゾコーバ、パキロビッドの双方に併用禁忌
           ['降圧薬/antiHypertensive',['レザルタス配合錠','アゼルニジピン(カルブロック)']],
           ['抗不安薬、催眠鎮静薬/benzodiazepin',['トリアゾラム(ハルシオン)']],
@@ -48,8 +51,6 @@
     ] 
  const labelForContraindicationOfXocova =[   ['高脂血症治療薬/lipid-lowering',['シンバスタチン(リポバス)']],
       ['子宮収縮薬/',['エルゴメトリンマレイン酸塩','メチルエルゴメトリンマレイン酸塩(パルタンM)']],
-
-
       ['抗悪性腫瘍薬/antitumor',['エンザルタミド(イクスタンジ)','ミトタン(オペプリム)']]
   ]
 
@@ -64,28 +65,32 @@ window.onload = function(){
 } 
 
 function calcSeverity(){
-   let GradeOfSaturation = getIntBySelect('selectSpO2');
-   let GradeOfSymptom = getIntBySelect('selectSymptom');
-   let SeverityOfCOVID = '';
+   let GradeOfSaturation = getIntBySelect('selectSpO2'); 
+   let SymptomSelected = getIntBySelect('selectSymptom');
+   let GradeOfSymptom = 0;
+   // Symptom 0,1,2 -> 0 , symptom 3:呼吸困難・肺炎 -> 1 , symptom 4:酸素投与 -> 2 symptome 5:ICU/人工呼吸器 -> ３
+   if (SymptomSelected >= 3) {GradeOfSymptom =  SymptomSelected -2}
+   let severityOfCOVID = isGreater(GradeOfSaturation,GradeOfSymptom);
+   let outputText = `${stateForSeverityOfCOVID[severityOfCOVID]}`;
 
-   if(GradeOfSaturation ==0 && GradeOfSymptom <= 1){
-    let priority = calcPriority();
-    let statement = '';
-    if(priority == 5) statement ='抗ウィルス剤による重症化予防の適応外です｡';
-    else  statement = `治療薬の優先度は${priority}です｡`;
-    SeverityOfCOVID = `軽症です｡${statement}`;
-   } else if ( GradeOfSaturation == 1 || GradeOfSymptom<=2 ){
-     SeverityOfCOVID = '中等症Ⅰです。入院適応です。';
-   } else if (GradeOfSaturation == 2  || GradeOfSymptom<= 3){
-     SeverityOfCOVID = '中等症Ⅱです。緊急対応を要します。'
-   } else if (GradeOfSymptom >= 4){
-     SeverityOfCOVID = '重症'
+   if(severityOfCOVID == 0) { // 軽症であれば投薬の優先度
+     let calcedPriority = calcPriorityForPevention()
+     switch(calcedPriority){
+      case 1:
+      case 2:  
+        outputText += '重症化予防が強く推奨されます。';
+        break;
+      case 5:
+       outputText += '重症化予防は推奨されません。';
+       break;
+      default:
+       outputText += '重症化予防が推奨されます。' 
+
+     }
    }
+
    let result =  document.querySelector('p[id="resultForm"]');
-
-   result.textContent = SeverityOfCOVID;
-
-   let recommendations = recommendOfDrugs(priority);
+   result.textContent = outputText ;
    
 //   const medicationForm = document.querySelector('p[id="medicationForm"]');
 
@@ -94,16 +99,16 @@ function calcSeverity(){
  // }
 } 
 
-function recommendOfDrugs(priority_for_medication){
-    const templateOfMedication ={'ゾコーバ':'適応あり','ラゲブリオ':'適応あり','パキロビッド':'適応あり','ベクルリー':'適応あり','デキサメタゾン':'適応なし'};
-
-    
+function recommendOfDrugs(){
+    const templateOfMedication ={'ゾコーバ':'適応あり(薬価51852)','ラゲブリオ':'適応あり(薬価94312)','パキロビッド':'適応あり(薬価99028) ','ベクルリー':'適応あり(薬価371982)'};   
+// 薬剤費の自己負担は3割負担は9000、2割負担 6000、1割負担3000
     let fertillity = getIntBySelect('selectFertillity');
     let renalFunction = getIntBySelect('selectRenal');
-   
+
     switch(fertillity){
       case 1: // 女性
-        templateOfMedication['ゾコーバ']='投与後4日間まで避妊が必要';
+      templateOfMedication['ラゲブリオ']='投与後4日間まで避妊が必要';
+        templateOfMedication['ゾコーバ']='投与後14日間まで避妊が必要';
 
         break;
       case 2: // 妊婦および妊娠の可能性
@@ -119,32 +124,30 @@ function recommendOfDrugs(priority_for_medication){
       default:
     }
     switch(renalFunction){
-
       case 3: // GFR<60
-        templateOfMedication['ゾコーバ']+='臨床試験で適応外';
+        templateOfMedication['ゾコーバ']+='臨床試験実施なし、用量調節は不要です。';
         templateOfMedication['パキロビッド']='減量投与';
         break;
       case 4: // GFR<30
-        templateOfMedication['ゾコーバ']+='臨床試験で適応外'; // ラゲブリオは投与問題なし
+        templateOfMedication['ゾコーバ']+='臨床試験実施なし、他薬剤を推奨します。'; // ラゲブリオは投与問題なし
         templateOfMedication['パキロビッド']='禁忌';
         break;
       case 5: // HD
-      templateOfMedication['ゾコーバ']+='臨床試験で適応外';  // ラゲブリオは投与問題なし
+      templateOfMedication['ゾコーバ']+='臨床試験実施なく、投与は推奨されません。';  // ラゲブリオは投与問題なし
       templateOfMedication['パキロビッド']='禁忌';
         break;
       default:
-
-
     }
-
+    
+    
 
 
 
 }
 
 
-function calcPriority(){
-  if(isChecked('immuneSurpressed')) {return 1};
+function calcPriorityForPevention(){
+  if(isChecked('immuneSurpressed')) {return 1}
   
   let isVaccinated = (getIntBySelect('selectVaccination') >= 2); 
   let riskByAge = getIntBySelect('selectAge');
@@ -161,14 +164,14 @@ function calcPriority(){
   //  not vaccinated has risk      2  |  1 
 
 
-if(riskByAge == 4) return isVaccinated? 3 : 1;          // 75歳以上　適切なワクチン状態なら優先度3、でなければ優先度1
-if(riskByAge <= 2) {//　65歳未満
+if(riskByAge == 4) return isVaccinated? 3 : 1;          // 75歳以上適切なワクチン状態なら優先度3、でなければ優先度1
+if(riskByAge <= 2) {// 65歳未満
  if(!hasRisk()) return 5  // リスクなしなら、ワクチン接種にかかわらず投与推奨されず
  else  return isVaccinated? 4 : 2;  // 重症化リスクあり、ワクチン接種未→優先度2、接種済みなら優先度4
 
-} else { // 65歳以上
-    if(hasRisk) return isVaccinated? 3 : 1 // 65歳以上リスクあり
-    else return isVaccinated? 4 : 2 // 65歳以上リスク無
+} else { // 65歳-75歳
+    if(hasRisk) return isVaccinated? 3 : 1 // リスクあってワクチンなし優先度１、リスクあってもワクチンあれば優先度３ 
+    else return isVaccinated? 4 : 2 // 65歳-75歳リスク無
 }
 
 }
@@ -179,10 +182,7 @@ function hasRisk(){
   for(let i=0;i<checkedElements.length;i++){
     result.push(checkedElements[i].name);
   }
-  let risk = (result.length !=0);
-  let gradeOfRenalDamage = getIntBySelect('selectRenal'); // GFR<60ml/minがあればリスク。
-  risk = (gradeOfRenalDamage >= 3);
-
+  let risk = (result.length !=0) || (getIntBySelect('selectRenal') >=3) || (getIntBySelect('selectAge') == 4); // GFR<60ml/minがあればリスク。
   return risk
 }
 
@@ -196,6 +196,11 @@ function isChecked(name_of_element){
  
   return result.includes(name_of_element);
 
+}
+
+function isGreater(param_1,param_2){
+  if (param_1 >= param_2) return param_1
+  else return param_2
 }
 
 function getObjectOrAlert(name_of_element){ // InputかSelectかオブジェクトがなければAlertする｡
@@ -214,7 +219,7 @@ function getObjectOrAlert(name_of_element){ // InputかSelectかオブジェク�
 }
 
 
-function getIntBySelect(nameOfElementObject){ // return : 　nameOfElementObject.options[nameOfElementObject.selectedIndex].value か0
+function getIntBySelect(nameOfElementObject){ // return : nameOfElementObject.options[nameOfElementObject.selectedIndex].value か0
   let selectObject =  getObjectOrAlert(nameOfElementObject) // selectObject nullable 
   let indexOfElement = selectObject?.selectedIndex ?? -1
   if(indexOfElement == -1 ) {

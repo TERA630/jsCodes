@@ -1,8 +1,8 @@
-const inputNames = ['ヘモグロビン-inputHemoglobin-11.8-g/dl','赤血球数-inputRBC-400-万/mm3','ヘマトクリット-inputHaematocrit-40-%','網状球-inputReticlocyte-4-%',
-'血清鉄-inputSerumIron-100-μg/dl', 'TIBC-inputTIBC-260-μg/dL','フェリチン-inputFerritin-100-ng/ml','エリスロポエチン-inputErthropoietin--mIU/ml'];
+const inputNames = ['ヘモグロビン-inputHemoglobin-10.5-g/dL','赤血球数-inputRBC-400-万/mm3','ヘマトクリット-inputHaematocrit-28-%','網状球-inputReticlocyte-4-%',
+'血清鉄-inputSerumIron-100-μg/dL', 'TIBC-inputTIBC-260-μg/dL','フェリチン-inputFerritin-100-ng/mL','エリスロポエチン-inputErthropoietin--mIU/mL'];
 
 // 網状球 実施料12点 判断量 血液学的検査(125点)
-// 鉄 実施料11点 判断料 生化学検査I 144点(5~7項目 93点 8~9項目99点 10項目以上106点にまとめ) UIBC
+// Fe, UIBC 実施料11点 判断料 生化学検査I 144点(5~7項目 93点 8~9項目99点 10項目以上106点にまとめ)
 // エリスロポエチン 注釈 赤血球増加症の鑑別、重度の慢性腎不全あるいはEpoやESA製剤投与中の透析患者の腎性貧血の診断  骨髄異形成症候群の治療方針の決定
 // TIBC  通常はトランスフェリンの1/3は鉄と結合(＝血清鉄)  通常は2/3が鉄が結合可能な部分 
 
@@ -16,7 +16,7 @@ function calcForm(){
  
 
   let RBCCount = getIntByName('inputRBC');
- // let hemoglobin = getFloatByName('inputHemoglobin');
+ let hemoglobin = getFloatByName('inputHemoglobin');
   let hematocrit = getIntByName('inputHaematocrit');
   let reticlocyte = getIntByName('inputReticlocyte');
   let resultText = '';
@@ -35,14 +35,22 @@ function calcForm(){
   if(saturatonOfIron != null && saturatonOfIron != 0){
     resultText += `鉄飽和率は${saturatonOfIron}%でした。` 
   }
-  calcRPI(hematocrit,reticlocyte);
+let rPI = calcRPI(hematocrit,reticlocyte);
+  if(rPI>2) {resultText += `RPIは${rPI}で造血亢進が見られ、出血や溶血の可能性はあります。`}
+  else { resultText +=  `RPIは${rPI}で、造血亢進はありませんでした。` }
+
   outputForm.textContent = resultText
 }
 function calcRPI(_hematocrit,_reticlocyte){
-   
+ 
+   let reticulocyteProductionIndex = 0;
 
+   let sex = getIntBySelect('selectSex');
 
-  
+   if(sex == 0) {reticulocyteProductionIndex = _reticlocyte*(_hematocrit/45)/(3.25-0.05*_hematocrit)}
+   else { reticulocyteProductionIndex = _reticlocyte*(_hematocrit/40)/(3.00-0.05*_hematocrit)}
+
+   return reticulocyteProductionIndex.toFixed(2)
 }
 
 function isIlegalNumber(_variable){
@@ -72,15 +80,20 @@ function getFloatByName(name_input){
   } else { 
     return parseFloat(Object.value)
   }
-
-
 }
 
 
+function getIntBySelect(_nameOfElement){ // return : nameOfElementObject.options[nameOfElementObject.selectedIndex].value か0
+  let select =  document.querySelector(`select[name="${_nameOfElement}"]`); // selectObject nullable 
+  let indexOfElement = select?.selectedIndex ?? -1
+  if(indexOfElement == -1 ) {
+    return 0
+  } else {
+    return parseInt(select.options[indexOfElement].value);
+  }
+}
 
 function renderinput(parent_element,label_and_name_array){ // checkBoxName,labelForCheckBox
-
-
     for(let i=0; i< label_and_name_array.length; i++){
  //     let rowCell = document.createElement('div');
  //     parent_element.appendChild(rowCell);

@@ -10,6 +10,8 @@ function showTreatment(){
     let lifeStage = getValueFromSelectByName('selectMenopause');
     let fragilitiyFracture = parseInt(getValueFromSelectByName('selectHasFlexture'));
     let tScore =parseInt(getValueFromSelectByName('selectTscore'));
+    let recommend ="";
+
 
     switch(fragilitiyFracture){
       case 0:
@@ -21,13 +23,14 @@ function showTreatment(){
         }  else if(tScore == 1){ recommend = '薬物治療が推奨されます。'
         } else {
           recommend = '骨折はあるけれどどうするべきか';
-        };
+        }
         break;
       case 2:
         recommend = '骨密度にかかわらず薬物治療が推奨されます。'
+        break;
       default:
-    };
-
+    }
+  
     if(lifeStage == 0){
         recommend += ' '
     } else if(lifeStage == 1){
@@ -38,16 +41,10 @@ function showTreatment(){
     resultFormElement.textContent = recommend;
 }
 
-
-
-
-
 function getValueFromSelectByName(name_of_element){
     let querySelect = document.querySelector(`select[name="${name_of_element}"]`)
     let indexOfElement = querySelect?.selectedIndex ?? -1
     return parseInt(querySelect.options[indexOfElement].value);
    }
-
-   //　　最新の骨粗鬆症薬　　日老医誌2019;56:136-145臨床老年医学　
-
+   // 最新の骨粗鬆症薬 日老医誌2019;56:136-145臨床老年医学
    //
