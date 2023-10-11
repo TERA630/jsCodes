@@ -2,7 +2,7 @@ const inputNames = ['ヘモグロビン-inputHemoglobin-10.5-g/dL','赤血球数
 '血清鉄-inputSerumIron-100-μg/dL', 'TIBC-inputTIBC-260-μg/dL','フェリチン-inputFerritin-100-ng/mL','エリスロポエチン-inputErthropoietin--mIU/mL'];
 
 // 網状球 実施料12点 判断量 血液学的検査(125点)
-// Fe, UIBC 実施料11点 判断料 生化学検査I 144点(5~7項目 93点 8~9項目99点 10項目以上106点にまとめ)
+// Fe, UIBC 実施料11点 判断料 生化学検査I 144点(5~7項目 93点 8~9項目99点 10項目以上106点にまとめ) 
 // エリスロポエチン 注釈 赤血球増加症の鑑別、重度の慢性腎不全あるいはEpoやESA製剤投与中の透析患者の腎性貧血の診断  骨髄異形成症候群の治療方針の決定
 // TIBC  通常はトランスフェリンの1/3は鉄と結合(＝血清鉄)  通常は2/3が鉄が結合可能な部分 
 
@@ -16,7 +16,7 @@ function calcForm(){
  
 
   let RBCCount = getIntByName('inputRBC');
- let hemoglobin = getFloatByName('inputHemoglobin');
+  let hemoglobin = getFloatByName('inputHemoglobin');
   let hematocrit = getIntByName('inputHaematocrit');
   let reticlocyte = getIntByName('inputReticlocyte');
   let resultText = '';
@@ -24,23 +24,65 @@ function calcForm(){
   if( isIlegalNumber(hematocrit) || isIlegalNumber(RBCCount)) { resultText='赤血球数、ヘマトクリットの正しい値を入力ください。\r\n' } 
   else {
     let meanCorpuscularVolume = ((hematocrit / RBCCount) * 1000).toFixed(1);
-    if(meanCorpuscularVolume <= 80) {resultText = `MCV${meanCorpuscularVolume}の小球性貧血です。`}
+    if(meanCorpuscularVolume <= 80) {
+      resultText = diagnosisLowMCV(meanCorpuscularVolume)
+   }
     else if (meanCorpuscularVolume<=100){resultText = '正球性貧血です。'}
     else if(meanCorpuscularVolume>120){resultText = `MCV${meanCorpuscularVolume}と著明高値であり､巨赤芽球性貧血の可能性があります｡`}
   }
 
-  let serumIron =  getIntByName('inputSerumIron');
-  let serumTIBC = getIntByName('inputTIBC');
-  let saturatonOfIron = (serumIron/serumTIBC * 100).toFixed(1);
-  if(saturatonOfIron != null && saturatonOfIron != 0){
-    resultText += `鉄飽和率は${saturatonOfIron}%でした。` 
-  }
-let rPI = calcRPI(hematocrit,reticlocyte);
+
+  let rPI = calcRPI(hematocrit,reticlocyte);
   if(rPI>2) {resultText += `RPIは${rPI}で造血亢進が見られ、出血や溶血の可能性はあります。`}
   else { resultText +=  `RPIは${rPI}で、造血亢進はありませんでした。` }
-
+  
   outputForm.textContent = resultText
 }
+
+function diagnosisLowMCV(_MCV){
+  let RBCCount = getIntByName('inputRBC');
+  let  resultText = `MCV${_MCV}の小球性貧血です。`;
+  let likeryRatioOfIDA = 1; 
+  let mentzerIndex = _MCV/RBCCount;
+
+
+  let serumIron =  getIntByName('inputSerumIron');
+  let serumTIBC = getIntByName('inputTIBC');
+  let saturatonOfIron = (serumIron/serumTIBC * 100);
+
+  if(saturatonOfIron<0.05){
+    resultText += `鉄飽和度は${saturatonOfIron}%と著明に低下しており、`
+    likeryRatioOfIDA *= 10.5;
+  } else if(saturatonOfIron<0.09){
+    resultText += `鉄飽和度は${saturatonOfIron}%と低下しており、`
+    likeryRatioOfIDA *=2.5;
+  } else {
+    resultText += `鉄飽和度は${saturatonOfIron}%と低下はありません。`
+  }
+
+  let ferritin = getIntByName('inputFerritin');
+  if(ferritin<15){
+    resultText += `フェリチンは${ferritin}と著明に低下しております。`
+    likeryRatioOfIDA *= 51.8;
+  } else if(ferritin<24){
+    resultText += `フェリチンは${ferritin}と低下しております。`
+    likeryRatioOfIDA *= 8.8;
+  } else if(ferritin<34){
+    resultText += `フェリチンは${ferritin}と低下しております。`
+    likeryRatioOfIDA *= 2.5;
+  }
+
+  if(likeryRatioOfIDA>10){
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}と強く疑われます`
+  } else if(likeryRatioOfIDA<0.1){
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}とやや否定的です`
+  } else {
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}でした。`
+  }
+
+  return resultText;
+}
+
 function calcRPI(_hematocrit,_reticlocyte){
  
    let reticulocyteProductionIndex = 0;

@@ -176,6 +176,14 @@ if(riskByAge <= 2) {// 65歳未満
 
 }
 
+function getJSONFromFile(){
+  let fileElement = document.querySelector('input[type="file" name="fileElement"]');
+  fileElement.addEventListener('change',function(e){
+    const result = e.target.files;
+    console.log(result);
+  })
+}
+
 function hasRisk(){
   let checkedElements = document.querySelectorAll('input[type="checkbox"]:checked');
   let result =[];
