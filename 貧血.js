@@ -26,19 +26,15 @@ function calcForm(){
     let meanCorpuscularVolume = ((hematocrit / RBCCount) * 1000).toFixed(1);
     if(meanCorpuscularVolume <= 80) {
       resultText = diagnosisLowMCV(meanCorpuscularVolume)
-   }
-    else if (meanCorpuscularVolume<=100){resultText = '正球性貧血です。'}
+   } else if (meanCorpuscularVolume<=100){resultText = '正球性貧血です。'
+     let rPI = calcRPI(hematocrit,reticlocyte);
+    if(rPI>2) {resultText += `RPIは${rPI}で造血亢進が見られ、出血や溶血の可能性はあります。`}
+    else { resultText +=  `RPIは${rPI}で、造血亢進はありませんでした。` }
+  }
     else if(meanCorpuscularVolume>120){resultText = `MCV${meanCorpuscularVolume}と著明高値であり､巨赤芽球性貧血の可能性があります｡`}
   }
-
-
-  let rPI = calcRPI(hematocrit,reticlocyte);
-  if(rPI>2) {resultText += `RPIは${rPI}で造血亢進が見られ、出血や溶血の可能性はあります。`}
-  else { resultText +=  `RPIは${rPI}で、造血亢進はありませんでした。` }
-  
   outputForm.textContent = resultText
 }
-
 function diagnosisLowMCV(_MCV){
   let RBCCount = getIntByName('inputRBC');
   let  resultText = `MCV${_MCV}の小球性貧血です。`;
@@ -48,12 +44,12 @@ function diagnosisLowMCV(_MCV){
 
   let serumIron =  getIntByName('inputSerumIron');
   let serumTIBC = getIntByName('inputTIBC');
-  let saturatonOfIron = (serumIron/serumTIBC * 100);
+  let saturatonOfIron = (serumIron/serumTIBC * 100).toFixed(1);
 
-  if(saturatonOfIron<0.05){
+  if(saturatonOfIron<5){
     resultText += `鉄飽和度は${saturatonOfIron}%と著明に低下しており、`
     likeryRatioOfIDA *= 10.5;
-  } else if(saturatonOfIron<0.09){
+  } else if(saturatonOfIron<9){
     resultText += `鉄飽和度は${saturatonOfIron}%と低下しており、`
     likeryRatioOfIDA *=2.5;
   } else {
@@ -73,11 +69,11 @@ function diagnosisLowMCV(_MCV){
   }
 
   if(likeryRatioOfIDA>10){
-    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}と強く疑われます`
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}と強く疑われます。`
   } else if(likeryRatioOfIDA<0.1){
-    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}とやや否定的です`
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}とやや否定的です。サラセミアの指標のMentzerIndexは${mentzerIndex}でした`
   } else {
-    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}でした。`
+    resultText += `鉄欠乏性貧血のLRは${likeryRatioOfIDA}でした。サラセミアの指標のMentzerIndexは${mentzerIndex}でした`
   }
 
   return resultText;

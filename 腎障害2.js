@@ -67,7 +67,7 @@ function decideSGLT2i(grade_of_CKD,grade_of_age){
   //
   // 日本の推奨では糖尿病合併、≧15ml/minなら積極的な使用を考慮。糖尿病非合併なら蛋白尿あれば積極的な使用を考慮。
   // IgA腎症でGFR43、ACR 900mg/g▽GFR4ml→3ml/年26%のアルブミン尿低下。
-　// 巣状硬化症▽4ml/min→1.9ml/min/年
+  // 巣状硬化症▽4ml/min→1.9ml/min/年
    
 
 
