@@ -74,5 +74,5 @@ window.onload= function(){
       return 0;
     } else { 
       return parseInt(Object.value);
-    };
+    }
   }

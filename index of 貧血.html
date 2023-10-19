@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script defer src="貧血.js"></script>
+
+  </head>
+<body>
+ <div class="wrapper" name="labResult"> 
+</div>
+<div>
+  <label>性別</label>
+  <select name="selectSex">
+    <option value="0">男性</option>
+    <option value="1" selected>女性</option>
+  </select>
+</div>
+
+<input type="button" value="計算" class="styledButton" onclick="calcForm()">
+
+<div class="boxInterpose" name="textRecommend"> 検査結果を入力ください</div>
+
+</div>
+
+
+</body>
+
+<style>
+    .wrapper{
+        display: grid;
+        width: fit-content;
+        padding: 0.8rem;
+        color: #eee;
+        text-shadow: 1px 1px 1px #000;
+        grid-template-columns: 11rem 8rem 4rem 11rem 8rem 4rem;
+        background-color: #70a1c7;
+        border-radius: 10px;
+        box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),inset -2px -2px 3px rgba(0, 0, 0, 0.6)
+      }         
+  
+    .wrapper > label{
+      padding-left: 0.5rem;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+    }
+
+    input {
+      margin: 0.3rem 0;
+      border: none;
+      padding-top: 0.3rem 0 0.3rem 1rem;
+      background: #eee;
+      box-shadow: inset 1px 1px #bbb;
+    }
+
+    input[type='number']:focus{
+      outline: 0;
+      box-shadow: inset 0 0 0 1px rgb(33, 150, 243);
+    }
+ 
+
+    .styledButton{
+      border: 0;
+      line-height: 2.5;
+      padding: 0 20px;
+      font-size: 1rem;
+      text-align: center;
+      color: white;
+      text-shadow: 1px 1px 1px #000;
+      border-radius: 10px;
+      background-color: #ff5252;
+      background-image: linear-gradient(to top left,#ff7878,#ff5252);
+      box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6),inset -2px -2px 3px rgba(0, 0, 0, 0.6)
+
+    }
+
+    .boxInterpose{
+      margin: 2rem 0;
+      background: whitesmoke;
+      border-left: double 7px #70a1c7;
+      border-right: double 7px #70a1c7;
+    }
+
+
+
+
+
+
+
+
+  .boxtitle{
+    position: absolute;
+    display: inline-block;
+    top: -27px;
+    left: -3px;
+    padding: 0 9px;
+    height:  25px;
+    line-height : 25px;
+    font-size: 17px;
+    background-color: #ff5252;
+  }
+  
+   
+  
+  .roundedBox {
+    position: relative;
+    margin: 2em 0;
+    padding:  0.5em 1em;
+    border: solid 3px #ff5252;
+  }
+  .roundedBox .roundedBoxTitle{
+    position: absolute;
+    display: inline-block;
+    top: -27px;
+    left: -3px;
+    padding: 0 9px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 17px;
+    background-color: #ff5252;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+  }
+  .roundedBox div {
+    display:flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  label {
+    margin-left: 0.25em;
+    margin-right: 0.3em;
+  }
+  
+  
+  </style>
+  
+  
+  </html>
+
