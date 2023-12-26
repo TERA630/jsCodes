@@ -17,10 +17,9 @@ function calcRisk(){
     const hasCI = document.querySelector('input[name="checkCI"]').value;   
     const hasPAD = document.querySelector('input[name="checkPAD"]').value;
 
-    const sex = getValueFromSelectByName('selectSex');
-    let scoreHisayama = (sex == 0) ? 7 : 0;
+    let scoreHisayama = getValueFromSelectByName('selectSex')
 
-    scoreHisayama = scoreHisayama + getValueFromSelectByName('selectsBp') + getValueFromSelectByName('selectLDL-C') +getValueFromSelectByName('selectHDL-C') ;
+    scoreHisayama += getValueFromSelectByName('selectsBp') ;
 
     if(hasDM || hasCKD || hasCI || hasPAD) {
         riskGrade = 2;
