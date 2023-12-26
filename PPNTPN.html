@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+  
+
+  </head>
+
+  <body>
+     ブドウ糖液 0.5g/kg/hr 以下（正常人で）
+
+
+ 
+
+    <table name="TPN-component">
+    <tbody>
+        <tr>
+            <th >製品名</th><th>液量</th><th>ブドウ糖(g/容器)</th><th>Na(mEq/容器)</th><th>K(mEq/容器)</th><th>アミノ酸(mEq/容器)</th><th>カロリー(kcal/容器)</th>
+        </tr><tr>
+            <td>エルネオパNF1号</td><td>1000ml</td><td>120</td><td>50</td><td>22</td><td>22</td><td>20</td><td>560</td>
+        </tr><tr>
+            <td>エルネオパNF1号</td><td>1500ml</td><td>180</td><td>75</td><td>33</td><td>22</td><td>30</td><td>840</td>
+        </tr>  <tr>
+          <td>エルネオパNF2号</td><td>1500ml</td><td>262</td><td>75</td><td>33</td><td>22</td><td>30</td><td>1230</td>    
+  
+        </tr>
+  </tbody>
+    
+
+      
+    </table>
+
+
+
+
+    <p id='calcForm'>
+      <input type="button" value="重症度評価" onclick="calcSeverity()">
+    </p>
+    <p name = 'medicationList'></p>
+    <p id="commentForm"></p>
+    <p id='resultForm'></p>
+
+    <p id='medicationForm'></p>
+    <form name="myForm">
+      <input name="fileElement" type="file"/>
+    </form> 
+  </body>
+
+<style>
+
+table{
+  border-collapse: collapse;
+}
+
+th{
+  border: solid 1px #0f4b80;
+  color: #fafafa;
+  background-color: #0f4b80;
+  padding: 0.3rem;
+}
+td{
+  border: solid 1px;
+  padding: 0.3rem;
+}
+
+p[id='profileOfPatent']{
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #00a8e0;
+  padding: 0.5em;
+}
+
+p[id='clinicalStatus']{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #ff5252;
+  padding: 0.5em;
+}
+.boxtitle{
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height:  25px;
+  line-height : 25px;
+  font-size: 17px;
+  background-color: #ff5252;
+}
+.roundedBox {
+  position: relative;
+  margin: 2em 0;
+  padding:  0.5em 1em;
+  border: solid 3px #ff5252;
+}
+.roundedBox .roundedBoxTitle{
+  position: absolute;
+  display: inline-block;
+  top: -27px;
+  left: -3px;
+  padding: 0 9px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 17px;
+  background-color: #ff5252;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+}
+.roundedBox div {
+  display:flex;
+  margin: 0;
+  padding: 0;
+}
+label {
+  margin-left: 0.25em;
+  margin-right: 0.3em;
+}
+</style>
+
+
+</html>
