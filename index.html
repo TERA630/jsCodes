@@ -3,63 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <script defer src="動脈硬化包括評価.js"></script>
+ 
   </head>
 <body>
- <div class="wrapper" name="labResult"> 
-</div>
-<div>
-  <label>性別</label>
-  <select name="selectSex">
-    <option value="7">男性</option>
-    <option value="0" selected>女性</option>
-  </select>
-</div>
-<form name="inputForm">
-    <label for="text-age">年齢</label>
-    <input type="text" id="text-age" name="age" value="60">歳<br>
-    <label for="selectsBp">収縮期血圧</label>
-    <select id="selectsBp">
-      <option value="0" selected>＜120</option>
-      <option value="1">120～129</option>
-      <option value="2">130～139</option>
-      <option value="3">140～159</option> 
-      <option value="4">＞160</option> 
-    </select>
-    <label for="selectdBp">拡張期血圧</label>
-    <select id="selectdBp">
-      <option value="0" selected>＜90</option>
-      <option value="1">91～100</option>
-      <option value="2">101～110</option>
-      <option value="3">111～</option>
-    </select><br>
-    <label for="selectLDL">血清LDL-C</label>
-    <select id="selectLDL">
-      <option value="0" selected>＜120</option>
-      <option value="1">120～139</option>
-      <option value="2">140～159</option>
-      <option value="3">160～</option>
-    </select><br>
-    <label for="selectHDL">血清HDL-C</label>
-    <select id="selectHDL">
-      <option value="0" selected>＞60  </option>
-      <option value="1">40～59</option>
-      <option value="2">＜40</option>
-    </select><br>
-    以下の病気がありますか<br>
-    <input type="checkbox" name="checkDM">糖尿病<br>
-    <input type="checkbox" name="checkCKD">慢性腎臓病(CKD)<br>
-    <input type="checkbox" name="checkCI">非心原性脳梗塞<br>
-    <input type="checkbox" name="checkPAD">末梢血管障害(PAD)<br>
-    <hr>
-    <input type="checkbox" name="checkIHD">早発性冠動脈疾患の家族歴<br>
-    <input type="checkbox" name="checkIGT">耐糖能異常(糖尿病ではない)<br>
-    <input type="checkbox" name="checkSmoke">喫煙<br>
+ <p name = 'tableSecond'>
+  <input type="checkbox" name="hasIHD">
+  <label for="hasIHD">冠動脈疾患</label>
+  <input type="checkbox" name="hasatheromeCI">
+  <label for="hasatheromeCI">アテローム血栓性脳梗塞、アテロームを伴う脳梗塞</label>
+ </p>
+ <p name="tableHighRisk">
+  <input type="checkbox" name="hasDM">
+  <label for="hasDM">糖尿病</label>
+  <input type="checkbox" name="hasCKD">
+  <label for="hasCKD">慢性腎臓病(CKD)</label>
+  <input type="checkbox" name="hasPAD">
+  <label for="hasPAD">末梢動脈疾患</label>
+ </p>
 
-  </form>
-  <p name="resultState">
-    リスク判定の結果は
-  </p>
+ <p name ='tableHisayama'>
+ </p>
+
 </body>
-</html>
-

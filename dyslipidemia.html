@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script defer src="脂質異常症.js"></script>
+  </head>
+<body>
+ <div class="wrapper" name="labResult"> 
+</div>
+<div>
+  <label>性別</label>
+  <select name="selectSex">
+    <option value="0">男性</option>
+    <option value="1" selected>女性</option>
+  </select>
+</div>
+
+<input type="button" value="計算" class="styledButton" onclick="calcForm()">
+
+<div class="boxInterpose" name="textRecommend"> 検査結果を入力ください</div>
+</div>
+
+
+<form name="form1">
+    <label for="text-uMg">年齢</label>
+    <input type="text" id="text-age" name="age" value="60">歳<br>
+    <label for="selectsBp">収縮期血圧</label>
+    <select id="selectsBp">
+      <option value="0">＜120</option>
+      <option value="1">120～129</option>
+      <option value="2">130～139</option>
+      <option value="3">140～159</option> 
+      <option value="4">＞160</option> 
+    </select>
+    <label for="selectdBp">拡張期血圧</label>
+    <select id="selectdBp">
+      <option value="0">＜90</option>
+      <option value="1">91～100</option>
+      <option value="2">101～110</option>
+      <option value="3">111～</option>
+    </select>
+
+    性別<input type="radio" name="radio-sex">男<input type="radio" name="radio-sex">女<br>
+    <hr>
+    以下の病気がありますか<br>
+    <input type="checkbox" name="checkDM">糖尿病<br>
+    <input type="checkbox" name="checkCKD">慢性腎臓病(CKD)<br>
+    <input type="checkbox" name="checkCI">非心原性脳梗塞<br>
+    <input type="checkbox" name="checkPAD">末梢血管障害(PAD)<br>
+    <hr>
+    <input type="checkbox" name="checkIHD">早発性冠動脈疾患の家族歴<br>
+    <input type="checkbox" name="checkLowHDL">HDL-C＜40mg/dl<br>
+    <input type="checkbox" name="checkIGT">耐糖能異常(糖尿病ではない)<br>
+    <input type="checkbox" name="checkSmoke">喫煙<br>
+
+    <input type="button" value="判定" onclick="calcRisk()"><br>
+  </form>
+
+</body>
+</html>
+
