@@ -1,80 +1,102 @@
-<!DOCTYPE html>
 <html>
+  <!--UNPKGは、npmで公開されているパッケージを配信しているCDNサービス -->
+  <!--CDNサービス Webのコンテンツをキャッシュサーバーに複製保存して、最適経路で配信するもの-->
+
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <script defer src="動脈硬化包括評価.js"></script>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/pdf-lib@1.4.0/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit/dist/fontkit.umd.js"></script> 
+    <script src="https://unpkg.com/downloadjs@1.4.7/download.js"></script>
+    <script src="PDFtest.js"></script>
   </head>
-<body>
- <div class="wrapper" name="labResult"> 
-</div>
-<div>
-  <label>性別</label>
-  <select name="selectSex">
-    <option value="7">男性</option>
-    <option value="0" selected>女性</option>
-  </select>
-</div>
-<form name="inputForm">
-    <label for="selectAge">齢</label>
-    <select name="selectAge">
-      <option value="0" selected>40～49</option>
-      <option value="1">50～59</option>
-      <option value="2">60～69</option>
-      <option value="3">70～79</option> 
-      <option value="4">80～</option> 
-    </select>
-  
-    <label for="selectsBp">収縮期血圧</label>
-    <select name="selectsBp">
-      <option value="0" selected>＜120</option>
-      <option value="1">120～129</option>
-      <option value="2">130～139</option>
-      <option value="3">140～159</option> 
-      <option value="4">＞160</option> 
-    </select>
-    <label for="selectdBp">拡張期血圧</label>
-    <select name="selectdBp">
-      <option value="0" selected>＜90</option>
-      <option value="1">91～100</option>
-      <option value="2">101～110</option>
-      <option value="3">111～</option>
-    </select><br>
-    <label for="selectLDL">血清LDL-C</label>
-    <select name="selectLDL">
-      <option value="0" selected>＜120</option>
-      <option value="1">120～139</option>
-      <option value="2">140～159</option>
-      <option value="3">160～</option>
-    </select><br>
-    <label for="selectHDL">血清HDL-C</label>
-    <select name="selectHDL">
-      <option value="0" selected>＞60  </option>
-      <option value="1">40～59</option>
-      <option value="2">＜40</option>
-    </select><br>
 
-    <label for="selectSmoke">喫煙</label>
-    <select name="selectSmoke">
-      <option value="0" selected>無(あるいは過去の喫煙)  </option>
-      <option value="2">有</option>
-    </select><br>
+  <body>
+    <p>Click the button to modify an existing PDF document with <code>pdf-lib</code></p>
+    <button onclick="modifyPdf()">Modify PDF</button>
+    <p class="small">(Your browser will download the resulting file)</p>
+    <div name="inputForm"></div>
+  </body>
 
+  <script>
+    
+    const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
 
-    以下の病気がありますか<br>
-    <input type="checkbox" name="checkCI">アテローム血栓性脳梗塞<br>
-    <input type="checkbox" name="checkDM">糖尿病<br>
-    <input type="checkbox" name="checkCKD">慢性腎臓病(CKD)<br>
-    <input type="checkbox" name="checkIHD">冠動脈疾患<br>
-    <input type="checkbox" name="checkPAD">末梢血管障害(PAD)<br>
-    <hr>
-    <input type="checkbox" name="checkFHofIHD">早発性冠動脈疾患の家族歴<br>
-    <input type="checkbox" name="checkIGT">耐糖能異常(糖尿病ではない)<br>
+    async function modifyPdf() {
+      // Fetch an existing PDF document
+      const url = '/pdf/updated_format.pdf';
+      const FONT_URL = '/font/ipaexg.ttf';
+  		const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
-  </form>
-  <p name="resultState">
-    リスク判定の結果は
-  </p>
-</body>
+      // Load a PDFDocument from the existing PDF bytes
+      const pdfDoc = await PDFDocument.load(existingPdfBytes)
+
+      pdfDoc.registerFontkit(fontkit);
+      // Embed the Helvetica font
+      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+      const fontData = await pdfDoc.embedFont(await(await fetch(FONT_URL)).arrayBuffer(),{subset:true});
+      // Get the first page of the document
+      const pages = pdfDoc.getPages()
+      const firstPage = pages[0]
+
+      // Get the width and height of the first page
+      const { width, height } = firstPage.getSize()
+
+      // Draw a string of text diagonally across the first page
+
+/*      firstPage.drawText('Javasciptでかかれたよ', {
+        x: 5,
+        y: height / 2 + 300,
+        size: 50,
+        font: fontData,
+        color: rgb(0.95, 0.1, 0.1),
+        rotate: degrees(-45),
+      })
+      */
+      drawMetrics(firstPage,110,765,fontData);
+      drawMetrics(firstPage,120,687,fontData);
+      const patient_data = collectData();
+
+      drawData(firstPage,110,765,fontData,patient_data.name);
+      // Serialize the PDFDocument to bytes (a Uint8Array)
+      const pdfBytes = await pdfDoc.save()
+
+			// Trigger the browser to download the PDF document
+      download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+    }
+  function drawMetrics (page,x_num,y_num,font_data){
+    page.drawText( `${x_num},${y_num}`,{
+      x:x_num,
+      y:y_num,
+      size : 12,
+      font : font_data,
+      color: rgb(0.95,0.1,0.1),
+      rotate : degrees(0)
+    }
+    )
+  }
+  function drawData(page,x_num,y_num,font_data,patientData){
+    page.drawText( patientData,{
+      x:x_num,
+      y:y_num,
+      size : 12,
+      font : font_data,
+      color: rgb(0.95,0.1,0.1),
+      rotate : degrees(0)
+    });
+  }
+
+  function collectData(){
+    const nameOfPatient = document.querySelector('inputPatientName').value;
+    const heightOfPatient = parseInt(document.querySelector('input[name="inputHeight"]').value);
+    const weight = parseInt(document.querySelector('input[name="inputWeight"]').value);
+    const abdominalCircumference  = parseInt(document.querySelector('input[name="inputAbdominalCircumference"]').value);
+    if (heightOfPatient == 0) {alert('height is not allowed to be zero. ')
+      } else {
+        let bmi = weight / ((heightOfPatient / 100) **2);
+      }
+    
+    const patientData = {name:nameOfPatient,height:heightOfPatient,weight:weight,abdominal:abdominalCircumference}
+    return patientData;
+  }
+  </script>
 </html>
-

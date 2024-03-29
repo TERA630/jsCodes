@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="utf-8">
+    <title>テスト</title>
+
+<style>
+    body {
+        margin: 50px 0 100px;
+      }
+      
+      .details {
+        color: #287E39;
+        line-height: 2;
+        border: 1px solid #B9F9B2;
+        width: 80%;
+        margin: 0 auto 20px;
+        &__summary {
+          position: relative;
+          display: block;
+          background: #F3FFF3;
+          cursor: pointer;
+          margin: 0;
+          padding: 10px 40px 10px 16px;
+          &::-webkit-details-marker {
+            display: none;
+          }
+          &::before {
+            display: block;
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            top: calc(50% - 6px);
+            right: 16px;
+            width: 6px;
+            height: 6px;
+            border: 6px solid transparent;
+            border-left: 6px solid #287E39;
+            transition: all 0.4s ease-out;
+            transform-origin: 3px 6px;
+            transform: rotate(90deg);
+            .details[open] & {
+              transform: rotate(-90deg);
+            }
+          }
+        }
+        &__content {
+          overflow: hidden;
+          margin: 0;
+          padding-left: 16px;
+          padding-right: 16px;
+          > * {
+            margin: 0;
+            padding-top: 16px;
+            &:last-child {
+              padding-bottom: 16px;
+            }
+          }
+        }
+      }
+</style>
+ 
+</head>
+<body>
+
+    <details class="details">
+        <summary class="details__summary">HTMLは&lt;details&gt;要素を使います</summary>
+        <div class="details__content">
+          <p>&lt;details&gt;要素を使う場合の開閉アニメーションはJavaScriptで補います。</p>
+        </div>
+      </details>
+      
+      <details class="details">
+        <summary class="details__summary">JavaScriptで行う開閉アニメーション</summary>
+        <div class="details__content">
+          <p>JavaScriptでWebアニメーションAPIを操作して開閉部分をアニメーションさせます。</p>
+        </div>
+      </details>
+
+</body>
+</html>
+
+

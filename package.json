@@ -9,5 +9,8 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.50.0"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1"
   }
 }
